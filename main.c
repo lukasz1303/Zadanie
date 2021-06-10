@@ -93,6 +93,7 @@ void inicjuj(int *argc, char ***argv)
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     srand(rank);
+    lamport = rank;
 
     pthread_create( &threadKom, NULL, startKomWatek , 0);
    // if (rank==0) {

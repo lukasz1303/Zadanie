@@ -10,12 +10,13 @@ void mainLoop()
         if (perc<STATE_CHANGE_PROB) {
             if (stan==STAN1_START) {
 				ack_f_counter = 0;
-				debug("Wysyłam REQ_F z wartoscią priorytetu: %d", lamport);
 				//changeState(STAN1_KONIEC);
 				
 				sleep( SEC_IN_STATE); // to nam zasymuluje, że wiadomość trochę leci w kanale
 				packet_t* pkt = malloc(sizeof(packet_t));
-				pkt->data = lamport;					 
+				int tmp = lamport;
+				pkt->data = tmp;
+				debug("Wysyłam REQ_F z wartoscią priorytetu: %d", tmp);
 				for (int i = 0; i < size; i++) {
 					if (i != rank){
 						sendPacket2(pkt, i, REQ_F);
