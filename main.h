@@ -22,7 +22,7 @@
 #define ROOT 0
 
 /* stany procesu */
-typedef enum {InRun, InMonitor, InSend, InFinish} state_t;
+typedef enum {STAN1_START, STAN1_SEKCJA, STAN1_KONIEC} state_t;
 extern state_t stan;
 extern int rank;
 extern int size;
@@ -46,8 +46,8 @@ extern MPI_Datatype MPI_PAKIET_T;
 
 /* Typy wiadomości */
 #define FINISH 1
-#define TALLOWTRANSPORT 2
-#define INRUN 3
+#define REQ_F 2
+#define ACK_F 3
 #define INMONITOR 4
 #define GIVEMESTATE 5
 #define STATE 6
@@ -73,9 +73,12 @@ extern MPI_Datatype MPI_PAKIET_T;
 int incLamport();
 int incBiggerLamport(int);
 extern int lamport;
+extern int ack_f_counter;
+extern int ack_f_queue[size - 1];
+extern int ack_f_queue_cur_size;
 
 #ifdef DEBUG
-#define debug(FORMAT,...) printf("%c[%d;%dm [%d]: " FORMAT "%c[%d;%dm\n",  27, (1+(rank/7))%2, 31+(6+rank)%7, rank, ##__VA_ARGS__, 27,0,37);
+#define debug(FORMAT,...) printf("%c[%d;%dm [%d]:[ts] %d] " FORMAT "%c[%d;%dm\n",  27, (1+(rank/7))%2, 31+(6+rank)%7, rank, lamport, ##__VA_ARGS__, 27,0,37);
 #else
 #define debug(...) ;
 #endif

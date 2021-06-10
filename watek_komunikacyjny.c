@@ -6,41 +6,37 @@ void *startKomWatek(void *ptr)
 {
     MPI_Status status;
     int is_message = FALSE;
+    int current_lamport;
+   
     packet_t pakiet;
     /* Obrazuje pętlę odbierającą pakiety o różnych typach */
-    while ( stan!=InFinish ) {
+    while (1) {
 	debug("czekam na recv");
         MPI_Recv( &pakiet, 1, MPI_PAKIET_T, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+        current_lamport = lamport;
 		incBiggerLamport( pakiet.ts);
 		
         switch ( status.MPI_TAG ) {
-	    case FINISH: 
-                changeState(InFinish);
+	    case REQ_F: 
+                debug("Dostałem REQ_F od %d z danymi %d",pakiet.src, pakiet.data);
+                if ((stan != STAN1_START) || (STAN1_START && current_lamport > pakiet.data)) {
+                    packet_t* pkt = malloc(sizeof(packet_t));
+                    pkt->data = 1;
+                    sleep(SEC_IN_STATE);
+                    sendPacket(pkt, i, ACK_F);
+                    debug("Wysyłam ACK_F do %d", pakiet.src);
+                }
+                else {
+                    ack_f_queue[ack_f_queue_cur_size] = pakiet.src;
+                    ack_f_queue_cur_size++;
+                }
+               
 	    break;
-	    case TALLOWTRANSPORT: 
-                changeTallow( pakiet.data);
-                debug("Dostałem wiadomość od %d z danymi %d",pakiet.src, pakiet.data);
+	    case ACK_F: 
+                debug("Dostałem ACK_F od %d z danymi %d", pakiet.src, pakiet.data);
+                ack_f_counter++;
 	    break;
-	    case GIVEMESTATE: 
-                pakiet.data = tallow;
-                sendPacket(&pakiet, ROOT, STATE);
-                debug("Wysyłam mój stan do monitora: %d funtów łoju na składzie!", tallow);
-	    break;
-            case STATE:
-                numberReceived++;
-                globalState += pakiet.data;
-                if (numberReceived > size-1) {
-                    debug("W magazynach mamy %d funtów łoju.", globalState);
-                } 
-            break;
-	    case INMONITOR: 
-                changeState( InMonitor );
-                debug("Od tej chwili czekam na polecenia od monitora");
-	    break;
-	    case INRUN: 
-                changeState( InRun );
-                debug("Od tej chwili decyzję podejmuję autonomicznie i losowo");
-	    break;
+          
 	    default:
 	    break;
         }
