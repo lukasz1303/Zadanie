@@ -14,15 +14,16 @@ void mainLoop()
 				
 				sleep( SEC_IN_STATE); // to nam zasymuluje, że wiadomość trochę leci w kanale
 				packet_t* pkt = malloc(sizeof(packet_t));
+				incLamport();
 				int tmp = lamport;
 				pkt->data = tmp;
 				debug("Wysyłam REQ_F z wartoscią priorytetu: %d", tmp);
+				changeState(NIC)
 				for (int i = 0; i < size; i++) {
 					if (i != rank){
 						sendPacket2(pkt, i, REQ_F);
 					}
 				}
-				incLamport();
 				while (ack_f_counter < size - shop_size);
 				changeState(STAN1_SEKCJA);
 				debug("Wchodzę do sekcji krytycznej - SKLEP FIRMOWY");
@@ -32,6 +33,7 @@ void mainLoop()
 				debug("Wychodzę z sekcji krytycznej - SKLEP FIRMOWY");
 			}
 			else if(stan==STAN1_KONIEC) {
+				incLamport();
 				for (int i = 0; i < ack_f_queue_cur_size; i++) {
 					packet_t* pkt = malloc(sizeof(packet_t));
 					pkt->data = 1;
@@ -40,7 +42,7 @@ void mainLoop()
 					debug("Wysyłam ACK_F z kolejki do %d", ack_f_queue[i]);
 					changeState(STAN1_START);
 				}
-				incLamport();
+				
 				ack_f_queue_cur_size = 0;
 
 				debug("Przechodzę do stan1");
