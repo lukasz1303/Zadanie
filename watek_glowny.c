@@ -10,7 +10,7 @@ void mainLoop()
         if (perc<STATE_CHANGE_PROB) {
             if (stan==STAN1_START) {
 				ack_f_counter = 0;
-				debug("Wysyłam REQ_F z wartoscią priorytetu: %d", &lamport);
+				debug("Wysyłam REQ_F z wartoscią priorytetu: %d", lamport);
 				//changeState(STAN1_KONIEC);
 				packet_t *pkt = malloc(sizeof(packet_t));
 				pkt->data = lamport;

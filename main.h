@@ -74,7 +74,7 @@ int incLamport();
 int incBiggerLamport(int);
 extern int lamport;
 extern int ack_f_counter;
-extern int ack_f_queue[];
+extern int ack_f_queue[100];
 extern int ack_f_queue_cur_size;
 extern int shop_size;
 

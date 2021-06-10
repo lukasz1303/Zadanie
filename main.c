@@ -21,7 +21,7 @@ pthread_mutex_t tallowMut = PTHREAD_MUTEX_INITIALIZER;
 
 int lamport = 0;
 int ack_f_counter = 0;
-int ack_f_queue[size - 1];
+int ack_f_queue[100];
 int ack_f_queue_cur_size = 0;
 
 void check_thread_support(int provided)
