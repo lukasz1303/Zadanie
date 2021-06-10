@@ -18,6 +18,7 @@ pthread_mutex_t lamportMut = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t stateMut = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t tallowMut = PTHREAD_MUTEX_INITIALIZER;
 
+int priority = 0;
 int lamport = 0;
 int ack_f_counter = 0;
 int ack_f_queue[100];

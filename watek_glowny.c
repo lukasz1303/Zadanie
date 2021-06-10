@@ -15,10 +15,10 @@ void mainLoop()
 				sleep( SEC_IN_STATE); // to nam zasymuluje, że wiadomość trochę leci w kanale
 				packet_t* pkt = malloc(sizeof(packet_t));
 				incLamport();
-				int tmp = lamport;
-				pkt->data = tmp;
-				debug("Wysyłam REQ_F z wartoscią priorytetu: %d", tmp);
-				changeState(NIC)
+				int priority = lamport;
+				pkt->data = priority;
+				debug("Wysyłam REQ_F z wartoscią priorytetu: %d", priority);
+				changeState(NIC);
 				for (int i = 0; i < size; i++) {
 					if (i != rank){
 						sendPacket2(pkt, i, REQ_F);

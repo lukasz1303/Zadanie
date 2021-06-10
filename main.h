@@ -26,6 +26,7 @@ typedef enum {STAN1_START, STAN1_SEKCJA, STAN1_KONIEC, NIC} state_t;
 extern state_t stan;
 extern int rank;
 extern int size;
+extern int priority;
 
 /* Ile mamy łoju na składzie? */
 extern int tallow;
