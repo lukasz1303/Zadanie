@@ -12,12 +12,13 @@ void mainLoop()
 				ack_f_counter = 0;
 				debug("Wysyłam REQ_F z wartoscią priorytetu: %d", lamport);
 				//changeState(STAN1_KONIEC);
-				packet_t *pkt = malloc(sizeof(packet_t));
-				pkt->data = lamport;
+				
 				sleep( SEC_IN_STATE); // to nam zasymuluje, że wiadomość trochę leci w kanale
 											  // bez tego algorytm formalnie błędny za każdym razem dawałby poprawny wynik
 				for (int i = 0; i < size; i++) {
 					if (i != rank){
+						packet_t* pkt = malloc(sizeof(packet_t));
+						pkt->data = lamport;
 						sendPacket(pkt, i, REQ_F);
 					}
 				}

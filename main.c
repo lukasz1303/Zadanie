@@ -1,7 +1,6 @@
 #include "main.h"
 #include "watek_komunikacyjny.h"
 #include "watek_glowny.h"
-#include "monitor.h"
 /* wątki */
 #include <pthread.h>
 
