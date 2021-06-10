@@ -21,7 +21,7 @@ void mainLoop()
 						sendPacket2(pkt, i, REQ_F);
 					}
 				}
-				incLamport()
+				incLamport();
 				while (ack_f_counter < size - shop_size);
 				changeState(STAN1_SEKCJA);
 				debug("Wchodzę do sekcji krytycznej - SKLEP FIRMOWY");
@@ -39,7 +39,7 @@ void mainLoop()
 					debug("Wysyłam ACK_F z kolejki do %d", ack_f_queue[i]);
 					changeState(STAN1_START);
 				}
-				incLamport()
+				incLamport();
 				ack_f_queue_cur_size = 0;
 
 				debug("Przechodzę do stan1");
