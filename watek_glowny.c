@@ -18,9 +18,10 @@ void mainLoop()
 				pkt->data = lamport;					 
 				for (int i = 0; i < size; i++) {
 					if (i != rank){
-						sendPacket(pkt, i, REQ_F);
+						sendPacket2(pkt, i, REQ_F);
 					}
 				}
+				incLamport()
 				while (ack_f_counter < size - shop_size);
 				changeState(STAN1_SEKCJA);
 				debug("Wchodzę do sekcji krytycznej - SKLEP FIRMOWY");
@@ -34,9 +35,11 @@ void mainLoop()
 					packet_t* pkt = malloc(sizeof(packet_t));
 					pkt->data = 1;
 					sleep(SEC_IN_STATE);			
-					sendPacket(pkt, ack_f_queue[i], ACK_F);
+					sendPacket2(pkt, ack_f_queue[i], ACK_F);
+					debug("Wysyłam ACK_F z kolejki do %d", ack_f_queue[i]);
 					changeState(STAN1_START);
 				}
+				incLamport()
 				ack_f_queue_cur_size = 0;
 
 				debug("Przechodzę do stan1");
