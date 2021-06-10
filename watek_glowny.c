@@ -39,10 +39,9 @@ void mainLoop()
 					pkt->data = 1;
 					sleep(SEC_IN_STATE);			
 					sendPacket2(pkt, ack_f_queue[i], ACK_F);
-					debug("Wysyłam ACK_F z kolejki do %d", ack_f_queue[i]);
-					changeState(STAN1_START);
+					debug("Wysyłam ACK_F z kolejki do %d", ack_f_queue[i]);	
 				}
-				
+				changeState(STAN1_START);
 				ack_f_queue_cur_size = 0;
 
 				debug("Przechodzę do stan1");
