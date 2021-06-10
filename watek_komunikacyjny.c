@@ -23,7 +23,7 @@ void *startKomWatek(void *ptr)
                     packet_t* pkt = malloc(sizeof(packet_t));
                     pkt->data = 1;
                     sleep(SEC_IN_STATE);
-                    sendPacket(pkt, i, ACK_F);
+                    sendPacket(pkt, pakiet.src, ACK_F);
                     debug("Wysyłam ACK_F do %d", pakiet.src);
                 }
                 else {

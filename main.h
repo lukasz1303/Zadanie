@@ -74,8 +74,9 @@ int incLamport();
 int incBiggerLamport(int);
 extern int lamport;
 extern int ack_f_counter;
-extern int ack_f_queue[size - 1];
+extern int ack_f_queue[];
 extern int ack_f_queue_cur_size;
+extern int shop_size;
 
 #ifdef DEBUG
 #define debug(FORMAT,...) printf("%c[%d;%dm [%d]:[ts] %d] " FORMAT "%c[%d;%dm\n",  27, (1+(rank/7))%2, 31+(6+rank)%7, rank, lamport, ##__VA_ARGS__, 27,0,37);
