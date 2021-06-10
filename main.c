@@ -151,7 +151,7 @@ int main(int argc, char **argv)
 {
     /* Tworzenie wątków, inicjalizacja itp */
     inicjuj(&argc,&argv); // tworzy wątek komunikacyjny w "watek_komunikacyjny.c"
-    shop_size = 1; // by było wiadomo ile jest łoju
+    shop_size = 2; // by było wiadomo ile jest łoju
     mainLoop();          // w pliku "watek_glowny.c"
 
     finalizuj();

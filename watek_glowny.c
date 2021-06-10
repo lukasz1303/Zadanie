@@ -18,7 +18,7 @@ void mainLoop()
 				int priority = lamport;
 				pkt->data = priority;
 				debug("Wysyłam REQ_F z wartoscią priorytetu: %d", priority);
-				changeState(NIC);
+				changeState(STAN1_REQ);
 				for (int i = 0; i < size; i++) {
 					if (i != rank){
 						sendPacket2(pkt, i, REQ_F);

@@ -22,7 +22,7 @@
 #define ROOT 0
 
 /* stany procesu */
-typedef enum {STAN1_START, STAN1_SEKCJA, STAN1_KONIEC, NIC} state_t;
+typedef enum {STAN1_START, STAN1_SEKCJA, STAN1_KONIEC, STAN1_REQ} state_t;
 extern state_t stan;
 extern int rank;
 extern int size;
@@ -80,7 +80,7 @@ extern int ack_f_queue_cur_size;
 extern int shop_size;
 
 #ifdef DEBUG
-#define debug(FORMAT,...) printf("%c[%d;%dm [%d]:[ts] %d] " FORMAT "%c[%d;%dm\n",  27, (1+(rank/7))%2, 31+(6+rank)%7, rank, lamport, ##__VA_ARGS__, 27,0,37);
+#define debug(FORMAT,...) printf("%c[%d;%dm [%d]:[ts %d] [p %d] " FORMAT "%c[%d;%dm\n",  27, (1+(rank/7))%2, 31+(6+rank)%7, rank, lamport, priority, ##__VA_ARGS__, 27,0,37);
 #else
 #define debug(...) ;
 #endif
