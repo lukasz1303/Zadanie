@@ -20,8 +20,7 @@ void *startKomWatek(void *ptr)
         switch ( status.MPI_TAG ) {
 	    case REQ_F: 
                 debug("Dostałem REQ_F od %d z danymi %d",pakiet.src, pakiet.data);
-                debug("stan != STAN1_START ,%d, STAN1_START, lamport > pakiet.data", (stan != STAN1_START), STAN1_START, lamport > pakiet.data);
-                if ((stan != STAN1_START) || (STAN1_START && lamport > pakiet.data)) {
+                if ((stan != STAN1_START) || (stan == STAN1_START && lamport > pakiet.data)) {
                     packet_t* pkt = malloc(sizeof(packet_t));
                     pkt->data = 1;
                     sleep(SEC_IN_STATE);
