@@ -23,6 +23,11 @@ int lamport = 0;
 int ack_f_counter = 0;
 int ack_f_queue[100];
 int ack_f_queue_cur_size = 0;
+int medium_request_queue[100];
+int medium_request_queue_cur_size = 0;
+int medium* mediums;
+int last;
+int m_pos;
 
 void check_thread_support(int provided)
 {
@@ -70,6 +75,12 @@ int incBiggerLamport(int n){
 void inicjuj(int *argc, char ***argv)
 {
     int provided;
+    shop_size = 2;
+    mediums = malloc(2 * sizeof(medium));
+    for (int i = 0; i < 2; i++) {
+        mediums[i].tun = 3;
+        mediums[i].c = 3;
+    }
     MPI_Init_thread(argc, argv,MPI_THREAD_MULTIPLE, &provided);
     check_thread_support(provided);
 
@@ -151,7 +162,7 @@ int main(int argc, char **argv)
 {
     /* Tworzenie wątków, inicjalizacja itp */
     inicjuj(&argc,&argv); // tworzy wątek komunikacyjny w "watek_komunikacyjny.c"
-    shop_size = 2; // by było wiadomo ile jest łoju
+     // by było wiadomo ile jest łoju
     mainLoop();          // w pliku "watek_glowny.c"
 
     finalizuj();

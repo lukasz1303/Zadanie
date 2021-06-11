@@ -22,7 +22,7 @@
 #define ROOT 0
 
 /* stany procesu */
-typedef enum {STAN1_START, STAN1_SEKCJA, STAN1_KONIEC, STAN1_REQ} state_t;
+typedef enum {STAN1_START, STAN1_SEKCJA, STAN1_KONIEC, STAN1_REQ, STAN2_START, STAN2_SEKCJA, STAN2_KONIEC, STAN2_REQ} state_t;
 extern state_t stan;
 extern int rank;
 extern int size;
@@ -49,8 +49,8 @@ extern MPI_Datatype MPI_PAKIET_T;
 #define FINISH 1
 #define REQ_F 2
 #define ACK_F 3
-#define INMONITOR 4
-#define GIVEMESTATE 5
+#define REQ_M 4
+#define REL_M 5
 #define STATE 6
 
 /* macro debug - działa jak printf, kiedy zdefiniowano
@@ -78,6 +78,25 @@ extern int ack_f_counter;
 extern int ack_f_queue[100];
 extern int ack_f_queue_cur_size;
 extern int shop_size;
+
+typedef struct {
+    int tun;       /* liczba tuneli jakie medium może otworzyć do odpoczynku */
+    int c;      /* pozostała liczba tuneli do otwarcia przed odpoczynkiem */
+} medium;
+
+typedef process {
+    int rank;       /* liczba tuneli jakie medium może otworzyć do odpoczynku */
+    int rel;      /* pozostała liczba tuneli do otwarcia przed odpoczynkiem */
+} medium;
+
+extern medium *mediums;
+
+extern process medium_request_queue[100];
+extern int medium_request_queue_cur_size;
+extern int last;
+extern int m_pos;
+extern int can_
+
 
 #ifdef DEBUG
 #define debug(FORMAT,...) printf("%c[%d;%dm [%d]:[ts %d] [p %d] " FORMAT "%c[%d;%dm\n",  27, (1+(rank/7))%2, 31+(6+rank)%7, rank, lamport, priority, ##__VA_ARGS__, 27,0,37);
