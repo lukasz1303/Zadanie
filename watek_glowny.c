@@ -61,6 +61,12 @@ void mainLoop()
 				for (int i = 0; i < size; i++) {
 					sendPacket2(pkt, i, REQ_M);
 				}
+
+				debug("Czekam na odbiór starszej wiadomości");
+
+				while (lamport == priority);
+				while (stan != STAN2_WAIT);
+
 				int pos;
 				for (int i = 0; i < medium_request_queue_cur_size; i++) {
 					if (medium_request_queue[i].rank == last) {
@@ -68,10 +74,6 @@ void mainLoop()
 					}
 				}
 
-				debug("Czekam na odbiór starszej wiadomości");
-
-				while (lamport == priority);
-				while (stan != STAN2_WAIT);
 				if (last != rank){
 					debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium: %d", last);
 					while (medium_request_queue[pos].rel == 0);
