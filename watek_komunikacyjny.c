@@ -48,7 +48,7 @@ void* startKomWatek(void* ptr)
             medium_request_queue_cur_size++;
             qsort(medium_request_queue, medium_request_queue_cur_size, sizeof(process), comparePriority);
             if (rank == pakiet.src) {
-                for (int i medium_request_queue_cur_size - 1; i > 0; i--) {
+                for (int i = medium_request_queue_cur_size - 1; i > 0; i--) {
                     if (medium_request_queue[i].rank == rank) {
                         m_pos = i;
                         debug("Moja pozycja w kolejce żądań: %d", i);
