@@ -43,7 +43,10 @@ void* startKomWatek(void* ptr)
             debug("Dostałem REQ_M od %d z priorytetem %d", pakiet.src, pakiet.data);
             medium_request_queue[medium_request_queue_cur_size].rank = pakiet.src;
             medium_request_queue[medium_request_queue_cur_size].rel = false;
+            medium_request_queue[medium_request_queue_cur_size].priority = pakiet.data;
+
             medium_request_queue_cur_size++;
+            qsort(medium_request_queue, medium_request_queue_cur_size, sizeof(process), comparePriority);
             if (rank == pakiet.src) {
                 m_pos = medium_request_queue_cur_size - 1;
                 if (medium_request_queue_cur_size <= 2){

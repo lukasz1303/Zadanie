@@ -83,6 +83,10 @@ void mainLoop()
 				debug("Wychodzę z sekcji krytycznej - OTWARCIE TUNELU PRZEZ MEDIUM");
 			}
 			else if (stan == STAN2_KONIEC) {
+				if (mediums[k].c == 0) {
+					mediums[k].c = mediums[k].tun;
+				}
+
 				incLamport();
 				for (int i = 0; i < size; i++) {
 					packet_t* pkt = malloc(sizeof(packet_t));

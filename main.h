@@ -84,10 +84,11 @@ typedef struct {
     int c;      /* pozostała liczba tuneli do otwarcia przed odpoczynkiem */
 } medium;
 
-typedef process {
+struct process {
     int rank;       /* liczba tuneli jakie medium może otworzyć do odpoczynku */
-    int rel;      /* pozostała liczba tuneli do otwarcia przed odpoczynkiem */
-} medium;
+    int rel;
+    int priority;/* pozostała liczba tuneli do otwarcia przed odpoczynkiem */
+};
 
 extern medium *mediums;
 
@@ -122,4 +123,5 @@ void sendPacket(packet_t *pkt, int destination, int tag);
 void sendPacket2(packet_t* pkt, int destination, int tag);
 void changeState( state_t );
 void changeTallow( int );
+int comparePriority(const void* a, const void* b);
 #endif

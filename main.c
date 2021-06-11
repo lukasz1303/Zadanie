@@ -23,9 +23,9 @@ int lamport = 0;
 int ack_f_counter = 0;
 int ack_f_queue[100];
 int ack_f_queue_cur_size = 0;
-int medium_request_queue[100];
+process medium_request_queue[100];
 int medium_request_queue_cur_size = 0;
-int medium* mediums;
+struct medium* mediums;
 int last;
 int m_pos;
 
@@ -156,6 +156,16 @@ void changeState( state_t newState )
     pthread_mutex_lock( &stateMut );
     stan = newState;
     pthread_mutex_unlock( &stateMut );
+}
+
+int comparePriority(const void* a, const void* b) {
+
+    const struct process* part1 = (struct process*)a;
+    const struct process* part2 = (struct process*)b;
+
+    const int s3 = part1->priority;
+    const int s4 = part2->priority;
+    return s3 > s4;
 }
 
 int main(int argc, char **argv)
