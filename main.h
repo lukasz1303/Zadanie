@@ -35,6 +35,7 @@ extern int tallow;
 extern int globalState;
 /* ilu już odpowiedziało na GIVEMESTATE */
 extern int numberReceived;
+extern int number_of_Mediums;
 
 /* to może przeniesiemy do global... */
 typedef struct {

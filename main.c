@@ -23,7 +23,8 @@ int lamport = 0;
 int ack_f_counter = 0;
 int ack_f_queue[100];
 int ack_f_queue_cur_size = 0;
-process medium_request_queue[100];
+int number_of_Mediums = 2;
+process* medium_request_queue;
 int medium_request_queue_cur_size = 0;
 medium* mediums;
 int last;
@@ -76,8 +77,9 @@ void inicjuj(int *argc, char ***argv)
 {
     int provided;
     shop_size = 2;
-    mediums = malloc(2 * sizeof(medium));
-    for (int i = 0; i < 2; i++) {
+    mediums = malloc(number_of_Mediums * sizeof(medium));
+    medium_request_queue = malloc((number_of_Mediums *2 + 2*size) * sizeof(medium));
+    for (int i = 0; i < number_of_Mediums; i++) {
         mediums[i].tun = 3;
         mediums[i].c = 3;
     }

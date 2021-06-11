@@ -79,6 +79,24 @@ void* startKomWatek(void* ptr)
                     medium_request_queue[i].rel = 1;
                 }
             }
+            int rel_counter = 0;
+            for (int i = 0; i < 2 * number_of_Mediums; i++) {
+                if (medium_request_queue[i].rel == 1) {
+                    rel_counter++;
+                }
+                else {
+                    break;
+                }
+            }
+            if (rel_counter == 2 * number_of_Mediums) {
+                for (int i = 2 * number_of_Mediums; i < medium_request_queue_cur_size; i++) {
+                    medium_request_queue[i - 2 * number_of_Mediums] = medium_request_queue[i];
+                }
+                medium_request_queue_cur_size -= 2 * number_of_Mediums;
+            }
+            for (int i = 0; i < medium_request_queue_cur_size; ++i) {
+                debug("[%d, %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority);
+            }
             
             break;
           
