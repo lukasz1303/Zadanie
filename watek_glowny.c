@@ -96,7 +96,7 @@ void mainLoop()
 					packet_t* pkt = malloc(sizeof(packet_t));
 					pkt->data = 1;
 					sleep(SEC_IN_STATE);
-					sendPacket2(pkt, i, ACK_F);
+					sendPacket2(pkt, i, REL_M);
 					debug("Wysyłam REL_M do %d", i);
 
 				}
