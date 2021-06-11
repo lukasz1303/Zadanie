@@ -25,7 +25,7 @@ int ack_f_queue[100];
 int ack_f_queue_cur_size = 0;
 process medium_request_queue[100];
 int medium_request_queue_cur_size = 0;
-struct medium* mediums;
+medium* mediums;
 int last;
 int m_pos;
 

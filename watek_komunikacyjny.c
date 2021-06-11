@@ -41,9 +41,9 @@ void* startKomWatek(void* ptr)
             break;
         case REQ_M:
             debug("Dostałem REQ_M od %d z priorytetem %d", pakiet.src, pakiet.data);
-            medium_request_queue[medium_request_queue_cur_size]->rank = pakiet.src;
-            medium_request_queue[medium_request_queue_cur_size]->rel = 0;
-            medium_request_queue[medium_request_queue_cur_size]->priority = pakiet.data;
+            medium_request_queue[medium_request_queue_cur_size].rank = pakiet.src;
+            medium_request_queue[medium_request_queue_cur_size].rel = 0;
+            medium_request_queue[medium_request_queue_cur_size].priority = pakiet.data;
 
             medium_request_queue_cur_size++;
             qsort(medium_request_queue, medium_request_queue_cur_size, sizeof(process), comparePriority);
@@ -53,7 +53,7 @@ void* startKomWatek(void* ptr)
                     last = rank;
                 }
                 else {
-                    last = medium_request_queue[m_pos-2]
+                    last = medium_request_queue[m_pos - 2];
                 }
             }
 
@@ -62,7 +62,7 @@ void* startKomWatek(void* ptr)
             debug("Dostałem REL_M od %d z danymi %d", pakiet.src, pakiet.data);
             for (int i = 0; i < medium_request_queue_cur_size; i++) {
                 if (medium_request_queue[i].rank == pakiet.src) {
-                    medium_request_queue[i]->rel = true;
+                    medium_request_queue[i].rel = 1;
                 }
             }
             

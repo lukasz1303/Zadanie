@@ -70,7 +70,7 @@ void mainLoop()
 
 				while (lamport == priority);
 				if (last != rank){
-					while (medium_request_queue[i].rel == false);
+					while (medium_request_queue[pos].rel == 0);
 				}
 				
 				k = m_pos % 2;
