@@ -47,7 +47,7 @@ void mainLoop()
 				changeState(STAN2_START);
 				ack_f_queue_cur_size = 0;
 
-				debug("Przechodzę do stan1_START");
+				debug("Przechodzę do stan2_START");
 			}
 			else if (stan == STAN2_START) {
 
@@ -76,12 +76,12 @@ void mainLoop()
 				k = m_pos % 2;
 				mediums[k].c--;
 				changeState(STAN2_SEKCJA);
-				debug("Wchodzę do sekcji krytycznej - OTWARCIE TUNELU PRZEZ MEDIUM");
+				debug("Wchodzę do sekcji krytycznej - OTWARCIE TUNELU PRZEZ MEDIUM %d", k);
 			}
 			else if (stan == STAN2_SEKCJA) {
 				sleep(SEC_IN_STATE);
 				changeState(STAN2_KONIEC);
-				debug("Wychodzę z sekcji krytycznej - OTWARCIE TUNELU PRZEZ MEDIUM");
+				debug("Wychodzę z sekcji krytycznej - OTWARCIE TUNELU PRZEZ MEDIUM %d", k);
 			}
 			else if (stan == STAN2_KONIEC) {
 				if (mediums[k].c == 0) {

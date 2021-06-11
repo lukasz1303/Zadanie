@@ -11,11 +11,11 @@ void* startKomWatek(void* ptr)
     packet_t pakiet;
     /* Obrazuje pętlę odbierającą pakiety o różnych typach */
     while (1) {
-        debug("czekam na recv");
+        //debug("czekam na recv");
         MPI_Recv(&pakiet, 1, MPI_PAKIET_T, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
         current_lamport = lamport;
         incBiggerLamport(pakiet.ts);
-        debug("Aktualizuje swój lamport %d na %d", current_lamport, lamport);
+        //debug("Aktualizuje swój lamport %d na %d", current_lamport, lamport);
 
         switch (status.MPI_TAG) {
         case REQ_F:
@@ -48,7 +48,14 @@ void* startKomWatek(void* ptr)
             medium_request_queue_cur_size++;
             qsort(medium_request_queue, medium_request_queue_cur_size, sizeof(process), comparePriority);
             if (rank == pakiet.src) {
-                m_pos = medium_request_queue_cur_size - 1;
+                for (int i medium_request_queue_cur_size - 1; i > 0; i--) {
+                    if (medium_request_queue[i].rank == rank) {
+                        m_pos = i;
+                        debug("Moja pozycja w kolejce żądań: %d", i);
+                        break;
+                    }
+                }
+                
                 if (medium_request_queue_cur_size <= 2){
                     last = rank;
                 }

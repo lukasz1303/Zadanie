@@ -84,7 +84,7 @@ typedef struct {
     int c;      /* pozostała liczba tuneli do otwarcia przed odpoczynkiem */
 } medium;
 
-typedef struct {
+typedef struct process {
     int rank;       /* liczba tuneli jakie medium może otworzyć do odpoczynku */
     int rel;
     int priority;/* pozostała liczba tuneli do otwarcia przed odpoczynkiem */
