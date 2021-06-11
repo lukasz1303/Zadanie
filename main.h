@@ -84,11 +84,11 @@ typedef struct {
     int c;      /* pozostała liczba tuneli do otwarcia przed odpoczynkiem */
 } medium;
 
-struct process {
+typedef struct {
     int rank;       /* liczba tuneli jakie medium może otworzyć do odpoczynku */
     int rel;
     int priority;/* pozostała liczba tuneli do otwarcia przed odpoczynkiem */
-};
+} process;
 
 extern medium *mediums;
 
@@ -96,7 +96,6 @@ extern process medium_request_queue[100];
 extern int medium_request_queue_cur_size;
 extern int last;
 extern int m_pos;
-extern int can_
 
 
 #ifdef DEBUG

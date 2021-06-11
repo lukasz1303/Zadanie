@@ -78,8 +78,8 @@ void inicjuj(int *argc, char ***argv)
     shop_size = 2;
     mediums = malloc(2 * sizeof(medium));
     for (int i = 0; i < 2; i++) {
-        mediums[i].tun = 3;
-        mediums[i].c = 3;
+        mediums[i]->tun = 3;
+        mediums[i]->c = 3;
     }
     MPI_Init_thread(argc, argv,MPI_THREAD_MULTIPLE, &provided);
     check_thread_support(provided);

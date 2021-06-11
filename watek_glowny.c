@@ -4,6 +4,7 @@
 void mainLoop()
 {
 	srandom(rank);
+	int k;
 	while (1) {
 		int perc = random() % 100;
 
@@ -43,7 +44,7 @@ void mainLoop()
 					debug("Wysyłam ACK_F z kolejki do %d", ack_f_queue[i]);
 
 				}
-				changeState(STAN1_START);
+				changeState(STAN2_START);
 				ack_f_queue_cur_size = 0;
 
 				debug("Przechodzę do stan1_START");
@@ -72,8 +73,8 @@ void mainLoop()
 					while (medium_request_queue[i].rel == false);
 				}
 				
-				int k = m_pos % 2;
-				mediums[k].c--;
+				k = m_pos % 2;
+				mediums[k]->c--;
 				changeState(STAN2_SEKCJA);
 				debug("Wchodzę do sekcji krytycznej - OTWARCIE TUNELU PRZEZ MEDIUM");
 			}
@@ -84,7 +85,7 @@ void mainLoop()
 			}
 			else if (stan == STAN2_KONIEC) {
 				if (mediums[k].c == 0) {
-					mediums[k].c = mediums[k].tun;
+					mediums[k]->c = mediums[k].tun;
 				}
 
 				incLamport();
