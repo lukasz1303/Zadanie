@@ -74,7 +74,7 @@ void mainLoop()
 				}
 				
 				k = m_pos % 2;
-				mediums[k]->c--;
+				mediums[k].c--;
 				changeState(STAN2_SEKCJA);
 				debug("Wchodzę do sekcji krytycznej - OTWARCIE TUNELU PRZEZ MEDIUM");
 			}
@@ -85,7 +85,7 @@ void mainLoop()
 			}
 			else if (stan == STAN2_KONIEC) {
 				if (mediums[k].c == 0) {
-					mediums[k]->c = mediums[k].tun;
+					mediums[k].c = mediums[k].tun;
 				}
 
 				incLamport();
