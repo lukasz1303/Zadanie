@@ -22,7 +22,7 @@
 #define ROOT 0
 
 /* stany procesu */
-typedef enum {STAN1_START, STAN1_SEKCJA, STAN1_KONIEC, STAN1_REQ, STAN2_START, STAN2_SEKCJA, STAN2_KONIEC, STAN2_REQ} state_t;
+typedef enum {STAN1_START, STAN1_SEKCJA, STAN1_KONIEC, STAN1_REQ, STAN2_START, STAN2_SEKCJA, STAN2_KONIEC, STAN2_REQ, STAN2_WAIT} state_t;
 extern state_t stan;
 extern int rank;
 extern int size;
