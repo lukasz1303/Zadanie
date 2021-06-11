@@ -71,6 +71,7 @@ void mainLoop()
 				debug("Czekam na odbiór starszej wiadomości");
 
 				while (lamport == priority);
+				while (stan != STAN2_WAIT);
 				if (last != rank){
 					debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium: %d", last);
 					while (medium_request_queue[pos].rel == 0);

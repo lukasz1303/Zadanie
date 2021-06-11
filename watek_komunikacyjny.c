@@ -68,6 +68,7 @@ void* startKomWatek(void* ptr)
                 else {
                     last = medium_request_queue[m_pos - 2].rank;
                 }
+                changeState(STAN2_WAIT);
             }
 
             break;
