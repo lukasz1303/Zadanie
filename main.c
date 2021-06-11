@@ -163,8 +163,8 @@ int comparePriority(const void* a, const void* b) {
     const struct process* part1 = (struct process*)a;
     const struct process* part2 = (struct process*)b;
 
-    const int s3 = part1.priority;
-    const int s4 = part2.priority;
+    const int s3 = part1->priority;
+    const int s4 = part2->priority;
     return s3 > s4;
 }
 
