@@ -47,6 +47,12 @@ void* startKomWatek(void* ptr)
 
             medium_request_queue_cur_size++;
             qsort(medium_request_queue, medium_request_queue_cur_size, sizeof(process), comparePriority);
+
+            for (i = 0; i < medium_request_queue_cur_size; ++i) {
+
+                debug("[%d, %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority);
+            }
+
             if (rank == pakiet.src) {
                 for (int i = medium_request_queue_cur_size - 1; i > 0; i--) {
                     if (medium_request_queue[i].rank == rank) {

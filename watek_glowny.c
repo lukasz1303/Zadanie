@@ -56,7 +56,7 @@ void mainLoop()
 				incLamport();
 				priority = lamport;
 				pkt->data = priority;
-				debug("Wysyłam REQ_M z wartoscią priorytetu: %d", priority);
+				debug("\t\t\tWysyłam REQ_M z wartoscią priorytetu: %d", priority);
 				changeState(STAN2_REQ);
 				for (int i = 0; i < size; i++) {
 					sendPacket2(pkt, i, REQ_M);
