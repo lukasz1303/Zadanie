@@ -69,7 +69,7 @@ void* startKomWatek(void* ptr)
                 }
             }
 
-            if (medium_request_queue_cur_size <= number_of_Mediums){
+            if (m_pos <= number_of_Mediums){
                 last = rank;
                 last_rel = 1;
                 last_rel_tun = 1;
