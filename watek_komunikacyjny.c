@@ -82,10 +82,17 @@ void* startKomWatek(void* ptr)
                 if (medium_request_queue[i].rank == pakiet.src) {
                     medium_request_queue[i].rel = 1;
                 }
+            }
+
+            for (int i = medium_request_queue_cur_size -1 ; i >=0; i--) {
                 if (medium_request_queue[i].rank == last) {
-                    last_rel = 1;
+                    if (medium_request_queue[i].rel == 1) {
+                        last_rel = 1;
+                    }
+                    break;
                 }
             }
+
             int rel_counter = 0;
             for (int i = 0; i < 2 * number_of_Mediums; i++) {
                 if (medium_request_queue[i].rel == 1) {
