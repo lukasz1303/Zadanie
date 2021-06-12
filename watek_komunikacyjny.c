@@ -61,7 +61,7 @@ void* startKomWatek(void* ptr)
                 debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
             }
 
-            for (int i = medium_request_queue_cur_size - 1; i > 0; i--) {
+            for (int i = medium_request_queue_cur_size - 1; i >= 0; i--) {
                 if (medium_request_queue[i].rank == rank) {
                     m_pos = i;
                     debug("Moja aktuallna pozycja w kolejce żądań: %d", i);
