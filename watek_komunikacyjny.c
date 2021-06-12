@@ -16,6 +16,10 @@ void* startKomWatek(void* ptr)
         current_lamport = lamport;
         incBiggerLamport(pakiet.ts);
         //debug("Aktualizuje swój lamport %d na %d", current_lamport, lamport);
+        
+        if (stan == STAN2_REQ) {
+            msg_received[pakiet.src] = 1;
+        }
 
         switch (status.MPI_TAG) {
         case REQ_F:
@@ -54,14 +58,16 @@ void* startKomWatek(void* ptr)
                 debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
             }
 
-            if (rank == pakiet.src) {
-                for (int i = medium_request_queue_cur_size - 1; i > 0; i--) {
-                    if (medium_request_queue[i].rank == rank) {
-                        m_pos = i;
-                        debug("Moja pozycja w kolejce żądań: %d", i);
-                        break;
-                    }
+            for (int i = medium_request_queue_cur_size - 1; i > 0; i--) {
+                if (medium_request_queue[i].rank == rank) {
+                    m_pos = i;
+                    debug("Moja aktuallna pozycja w kolejce żądań: %d", i);
+                    break;
                 }
+            }
+
+            if (rank == pakiet.src) {
+              
                 
                 if (medium_request_queue_cur_size <= number_of_Mediums){
                     last = rank;
@@ -73,6 +79,7 @@ void* startKomWatek(void* ptr)
                     last_rel = 0;
                     last_rel_tun = 0;
                 }
+
                 changeState(STAN2_WAIT);
 
 

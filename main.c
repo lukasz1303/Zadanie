@@ -31,6 +31,7 @@ int last;
 int last_rel = 0;
 int last_rel_tun = 0;
 int m_pos;
+int* msg_received;
 
 void check_thread_support(int provided)
 {
@@ -79,6 +80,7 @@ void inicjuj(int *argc, char ***argv)
 {
     int provided;
     shop_size = 2;
+    msg_received = malloc(size * sizeof(int));
     mediums = malloc(number_of_Mediums * sizeof(medium));
     medium_request_queue = malloc((number_of_Mediums *2 + 2*size) * sizeof(medium));
     for (int i = 0; i < number_of_Mediums; i++) {

@@ -50,7 +50,9 @@ void mainLoop()
 				debug("Przechodzę do stan2_START");
 			}
 			else if (stan == STAN2_START) {
-
+				for (int i = 0; i < size; i++) {
+					msg_received[i] = 0;
+				}
 				sleep(SEC_IN_STATE); // to nam zasymuluje, że wiadomość trochę leci w kanale
 				packet_t* pkt = malloc(sizeof(packet_t));
 				incLamport();
@@ -64,7 +66,17 @@ void mainLoop()
 
 				debug("Czekam na odbiór starszej wiadomości");
 
-				while (lamport == priority);
+				while (1) {
+					int c = 0;
+					for (int i = 0; i < size; i++) {
+						if (msg_received[i] == 1) {
+							c++;
+						}
+					}
+					if (c == size - 1) {
+						break;
+					}
+				}
 				while (stan != STAN2_WAIT);
 
 				if (last != rank){

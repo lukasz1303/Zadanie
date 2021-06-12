@@ -108,6 +108,7 @@ typedef struct process {
 extern medium *mediums;
 
 extern process *medium_request_queue;
+extern int* msg_received;
 extern int medium_request_queue_cur_size;
 extern int last;
 extern int last_rel;
