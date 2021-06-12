@@ -67,16 +67,16 @@ void mainLoop()
 				while (lamport == priority);
 				while (stan != STAN2_WAIT);
 
-				int pos;
-				for (int i = 0; i < medium_request_queue_cur_size; i++) {
-					if (medium_request_queue[i].rank == last) {
-						pos = i;
-					}
-				}
+				//int pos;
+				//for (int i = 0; i < medium_request_queue_cur_size; i++) {
+				//	if (medium_request_queue[i].rank == last) {
+				//		pos = i;
+				//	}
+				//}
 
 				if (last != rank){
 					debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium: %d", last);
-					while (medium_request_queue[pos].rel == 0);
+					while (last_rel == 0);
 				}
 				
 				k = m_pos % 2;

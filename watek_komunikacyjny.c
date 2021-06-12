@@ -64,11 +64,15 @@ void* startKomWatek(void* ptr)
                 
                 if (medium_request_queue_cur_size <= 2){
                     last = rank;
+                    last_rel = 1;
                 }
                 else {
                     last = medium_request_queue[m_pos - 2].rank;
+                    last_rel = 0;
                 }
                 changeState(STAN2_WAIT);
+
+
             }
 
             break;
@@ -77,6 +81,9 @@ void* startKomWatek(void* ptr)
             for (int i = 0; i < medium_request_queue_cur_size; i++) {
                 if (medium_request_queue[i].rank == pakiet.src) {
                     medium_request_queue[i].rel = 1;
+                }
+                if (i == last) {
+                    last_rel = 1;
                 }
             }
             int rel_counter = 0;
@@ -88,11 +95,13 @@ void* startKomWatek(void* ptr)
                     break;
                 }
             }
+
             if (rel_counter == 2 * number_of_Mediums) {
-                for (int i = 2 * number_of_Mediums; i < medium_request_queue_cur_size; i++) {
-                    medium_request_queue[i - 2 * number_of_Mediums] = medium_request_queue[i];
+                for (int i = number_of_Mediums; i < medium_request_queue_cur_size; i++) {
+                    medium_request_queue[i - number_of_Mediums] = medium_request_queue[i];
                 }
-                medium_request_queue_cur_size -= 2 * number_of_Mediums;
+                medium_request_queue_cur_size -= number_of_Mediums;
+                last -= number_of_Mediums;
             }
             for (int i = 0; i < medium_request_queue_cur_size; ++i) {
                 debug("[%d, %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority);

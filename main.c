@@ -28,7 +28,9 @@ process* medium_request_queue;
 int medium_request_queue_cur_size = 0;
 medium* mediums;
 int last;
+int last_rel = 0;
 int m_pos;
+int pos;
 
 void check_thread_support(int provided)
 {
