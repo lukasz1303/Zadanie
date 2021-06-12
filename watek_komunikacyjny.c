@@ -82,7 +82,7 @@ void* startKomWatek(void* ptr)
                 if (medium_request_queue[i].rank == pakiet.src) {
                     medium_request_queue[i].rel = 1;
                 }
-                if (i == last) {
+                if (medium_request_queue[i].rank == last) {
                     last_rel = 1;
                 }
             }

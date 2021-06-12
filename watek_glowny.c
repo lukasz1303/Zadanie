@@ -103,7 +103,7 @@ void mainLoop()
 					debug("Wysyłam REL_M do %d", i);
 
 				}
-				changeState(STAN1_START);
+				changeState(STAN2_START);
 				debug("Przechodzę do stan1_START");
 			}
 			else {
