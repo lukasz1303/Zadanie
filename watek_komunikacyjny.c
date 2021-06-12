@@ -17,11 +17,9 @@ void* startKomWatek(void* ptr)
         incBiggerLamport(pakiet.ts);
         //debug("Aktualizuje swój lamport %d na %d", current_lamport, lamport);
         
-        if (stan == STAN2_REQ) {
-            msg_received[pakiet.src] = 1;
-            for (int i = 0; i < size; i++) {
-                debug("{%d}", msg_received[i]);
-            }
+        msg_received[pakiet.src] = 1;
+        for (int i = 0; i < size; i++) {
+            debug("{%d}", msg_received[i]);
         }
 
         switch (status.MPI_TAG) {
