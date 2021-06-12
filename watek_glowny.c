@@ -73,7 +73,7 @@ void mainLoop()
 							c++;
 						}
 					}
-					if (c == size - 1) {
+					if (c == size) {
 						break;
 					}
 				}

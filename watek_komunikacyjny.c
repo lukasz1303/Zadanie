@@ -19,6 +19,9 @@ void* startKomWatek(void* ptr)
         
         if (stan == STAN2_REQ) {
             msg_received[pakiet.src] = 1;
+            for (int i = 0; i < size; i++) {
+                debug("{%d}", msg_received[i]);
+            }
         }
 
         switch (status.MPI_TAG) {
