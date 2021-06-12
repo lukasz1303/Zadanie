@@ -137,8 +137,15 @@ void mainLoop()
 					debug("\t\t\t\t\t\t\tWysyłam ACK_T do %d", i);
 
 				}
-				changeState(STAN1_START);
+				changeState(STAN2_START);
 				debug("\t\t\t\t\t\t\tPrzechodzę do stan1_START");
+
+
+				//|^
+				//TODO ZMIENIĆ STAN2_START NA STAN1_START
+
+
+
 			}
 			else {
 
