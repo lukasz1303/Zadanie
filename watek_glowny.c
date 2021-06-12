@@ -77,7 +77,7 @@ void mainLoop()
 						break;
 					}
 				}
-				while (stan != STAN2_WAIT);
+
 
 				if (last != rank){
 					debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium: %d", last);

@@ -69,24 +69,17 @@ void* startKomWatek(void* ptr)
                 }
             }
 
-            if (rank == pakiet.src) {
-              
-                
-                if (medium_request_queue_cur_size <= number_of_Mediums){
-                    last = rank;
-                    last_rel = 1;
-                    last_rel_tun = 1;
-                }
-                else {
-                    last = medium_request_queue[m_pos - number_of_Mediums].rank;
-                    last_rel = 0;
-                    last_rel_tun = 0;
-                }
-
-                changeState(STAN2_WAIT);
-
-
+            if (medium_request_queue_cur_size <= number_of_Mediums){
+                last = rank;
+                last_rel = 1;
+                last_rel_tun = 1;
             }
+            else {
+                last = medium_request_queue[m_pos - number_of_Mediums].rank;
+                last_rel = 0;
+                last_rel_tun = 0;
+            }
+
 
             break;
         case REL_M:
