@@ -92,7 +92,6 @@ extern int ack_f_counter;
 extern int ack_f_queue[100];
 extern int ack_f_queue_cur_size;
 extern int shop_size;
-extern int pos;
 
 typedef struct {
     int tun;       /* liczba tuneli jakie medium może otworzyć do odpoczynku */
@@ -112,6 +111,7 @@ extern process *medium_request_queue;
 extern int medium_request_queue_cur_size;
 extern int last;
 extern int last_rel;
+extern int last_rel_tun;
 extern int m_pos;
 
 
