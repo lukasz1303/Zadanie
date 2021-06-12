@@ -67,13 +67,6 @@ void mainLoop()
 				while (lamport == priority);
 				while (stan != STAN2_WAIT);
 
-				//int pos;
-				//for (int i = 0; i < medium_request_queue_cur_size; i++) {
-				//	if (medium_request_queue[i].rank == last) {
-				//		pos = i;
-				//	}
-				//}
-
 				if (last != rank){
 					debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium: %d", last);
 					while (last_rel == 0);
@@ -103,8 +96,37 @@ void mainLoop()
 					debug("Wysyłam REL_M do %d", i);
 
 				}
-				changeState(STAN2_START);
-				debug("Przechodzę do stan1_START");
+				changeState(STAN3_START);
+				debug("Przechodzę do stan3_START");
+			}
+			else if (stan == STAN3_START) {
+
+				if (last != rank) {
+					debug("\t\t\tCzekam na odbiór ACK_T od poprzedniego użytkownika tunelu: %d", last);
+					while (last_rel_tun == 0);
+				}
+				
+				changeState(STAN2_SEKCJA);
+				debug("\t\t\t\t\tWchodzę do sekcji krytycznej - WYJSCIE Z TUNELU %d", k);
+			}
+			else if (stan == STAN2_SEKCJA) {
+				sleep(SEC_IN_STATE);
+				changeState(STAN2_KONIEC);
+				debug("\t\t\t\t\tWychodzę z sekcji krytycznej - WYJSCIE Z TUNELU %d", k);
+			}
+			else if (stan == STAN2_KONIEC) {
+
+				incLamport();
+				for (int i = 0; i < size; i++) {
+					packet_t* pkt = malloc(sizeof(packet_t));
+					pkt->data = 1;
+					sleep(SEC_IN_STATE);
+					sendPacket2(pkt, i, ACK_T);
+					debug("\t\t\t\t\t\t\tWysyłam ACK_T do %d", i);
+
+				}
+				changeState(STAN1_START);
+				debug("\t\t\t\t\t\t\tPrzechodzę do stan1_START");
 			}
 			else {
 

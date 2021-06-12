@@ -44,13 +44,14 @@ void* startKomWatek(void* ptr)
             medium_request_queue[medium_request_queue_cur_size].rank = pakiet.src;
             medium_request_queue[medium_request_queue_cur_size].rel = 0;
             medium_request_queue[medium_request_queue_cur_size].priority = pakiet.data;
+            medium_request_queue[medium_request_queue_cur_size].rel_tun = 0;
 
             medium_request_queue_cur_size++;
             qsort(medium_request_queue, medium_request_queue_cur_size, sizeof(process), comparePriority);
 
             for (int i = 0; i < medium_request_queue_cur_size; ++i) {
 
-                debug("[%d, %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority);
+                debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
             }
 
             if (rank == pakiet.src) {
@@ -62,13 +63,15 @@ void* startKomWatek(void* ptr)
                     }
                 }
                 
-                if (medium_request_queue_cur_size <= 2){
+                if (medium_request_queue_cur_size <= number_of_Mediums){
                     last = rank;
                     last_rel = 1;
+                    last_rel_tun = 1;
                 }
                 else {
-                    last = medium_request_queue[m_pos - 2].rank;
+                    last = medium_request_queue[m_pos - number_of_Mediums].rank;
                     last_rel = 0;
+                    last_rel_tun = 0;
                 }
                 changeState(STAN2_WAIT);
 
@@ -92,10 +95,28 @@ void* startKomWatek(void* ptr)
                     break;
                 }
             }
+            
+            break;
+        case ACK_T:
+            debug("Dostałem ACK_T od %d z danymi %d", pakiet.src, pakiet.data);
+            for (int i = 0; i < medium_request_queue_cur_size; i++) {
+                if (medium_request_queue[i].rank == pakiet.src) {
+                    medium_request_queue[i].rel_tun = 1;
+                }
+            }
+
+            for (int i = medium_request_queue_cur_size - 1; i >= 0; i--) {
+                if (medium_request_queue[i].rank == last) {
+                    if (medium_request_queue[i].rel_tun == 1) {
+                        last_rel_tun = 1;
+                    }
+                    break;
+                }
+            }
 
             int rel_counter = 0;
             for (int i = 0; i < 2 * number_of_Mediums; i++) {
-                if (medium_request_queue[i].rel == 1) {
+                if (medium_request_queue[i].rel == 1 && medium_request_queue[i].rel_tun == 1) {
                     rel_counter++;
                 }
                 else {
@@ -110,11 +131,10 @@ void* startKomWatek(void* ptr)
                 medium_request_queue_cur_size -= number_of_Mediums;
             }
             for (int i = 0; i < medium_request_queue_cur_size; ++i) {
-                debug("[%d, %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority);
+                debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
             }
-            
+
             break;
-          
 	    default:
 	    break;
         }

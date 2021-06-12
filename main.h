@@ -22,7 +22,20 @@
 #define ROOT 0
 
 /* stany procesu */
-typedef enum {STAN1_START, STAN1_SEKCJA, STAN1_KONIEC, STAN1_REQ, STAN2_START, STAN2_SEKCJA, STAN2_KONIEC, STAN2_REQ, STAN2_WAIT} state_t;
+typedef enum {STAN1_START,
+STAN1_SEKCJA,
+STAN1_KONIEC,
+STAN1_REQ,
+STAN2_START,
+STAN2_SEKCJA,
+STAN2_KONIEC,
+STAN2_REQ,
+STAN2_WAIT,
+STAN3_START,
+STAN3_SEKCJA,
+STAN3_KONIEC,
+STAN3_REQ,
+} state_t;
 extern state_t stan;
 extern int rank;
 extern int size;
@@ -52,7 +65,7 @@ extern MPI_Datatype MPI_PAKIET_T;
 #define ACK_F 3
 #define REQ_M 4
 #define REL_M 5
-#define STATE 6
+#define ACK_T 6
 
 /* macro debug - działa jak printf, kiedy zdefiniowano
    DEBUG, kiedy DEBUG niezdefiniowane działa jak instrukcja pusta 
@@ -89,6 +102,7 @@ typedef struct {
 typedef struct process {
     int rank;       /* liczba tuneli jakie medium może otworzyć do odpoczynku */
     int rel;
+    int rel_tun;
     int priority;/* pozostała liczba tuneli do otwarcia przed odpoczynkiem */
 } process;
 
