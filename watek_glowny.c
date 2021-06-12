@@ -106,15 +106,15 @@ void mainLoop()
 					while (last_rel_tun == 0);
 				}
 				
-				changeState(STAN2_SEKCJA);
+				changeState(STAN3_SEKCJA);
 				debug("\t\t\t\t\tWchodzę do sekcji krytycznej - WYJSCIE Z TUNELU %d", k);
 			}
-			else if (stan == STAN2_SEKCJA) {
+			else if (stan == STAN3_SEKCJA) {
 				sleep(SEC_IN_STATE);
-				changeState(STAN2_KONIEC);
+				changeState(STAN3_KONIEC);
 				debug("\t\t\t\t\tWychodzę z sekcji krytycznej - WYJSCIE Z TUNELU %d", k);
 			}
-			else if (stan == STAN2_KONIEC) {
+			else if (stan == STAN3_KONIEC) {
 
 				incLamport();
 				for (int i = 0; i < size; i++) {
