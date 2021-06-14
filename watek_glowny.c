@@ -70,7 +70,7 @@ void mainLoop()
 				while (1) {
 					int c = 0;
 					for (int i = 0; i < size; i++) {
-						if (msg_received[i] > 0) {
+						if (msg_received[i] == 1 || msg_received[i] == 3) {
 							c++;
 						}
 					}
