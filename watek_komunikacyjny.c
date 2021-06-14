@@ -92,7 +92,7 @@ void* startKomWatek(void* ptr)
                 }
             }
             
-            //debug("Last = %d", last);
+            debug("Last = %d, m_pos = %d", last, m_pos);
 
 
             break;
@@ -122,6 +122,8 @@ void* startKomWatek(void* ptr)
             if (m_pos > -1) {
                 if (medium_request_queue[m_pos - number_of_Mediums].rel_tun == 1) {
                     last_rel_tun = 1;
+                    debug("Last = %d, last_rel_tun = %d", last, last_rel_tun);
+
                 }
             }
 

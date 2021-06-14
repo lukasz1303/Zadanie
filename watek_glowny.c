@@ -125,6 +125,7 @@ void mainLoop()
 			else if (stan == STAN3_START) {
 
 				if (last != rank) {
+					debug("Last = %d, last_rel_tun = %d", last, last_rel_tun);
 					debug("\t\t\tCzekam na odbiór ACK_T od poprzedniego użytkownika tunelu: %d", last);
 					while (last_rel_tun == 0);
 				}
