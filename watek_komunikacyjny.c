@@ -151,7 +151,7 @@ void* startKomWatek(void* ptr)
                 medium_request_queue_cur_size -= number_of_Mediums;
             }
             for (int i = 0; i < medium_request_queue_cur_size; ++i) {
-                debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
+                //debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
             }
 
             break;
