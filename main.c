@@ -13,10 +13,9 @@ state_t stan=STAN1_START;
 volatile char end = FALSE;
 int size,rank, shop_size; /* nie trzeba zerować, bo zmienna globalna statyczna */
 MPI_Datatype MPI_PAKIET_T;
-pthread_t threadKom, threadMon;
+pthread_t threadKom, threadRest;
 pthread_mutex_t lamportMut = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t stateMut = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t tallowMut = PTHREAD_MUTEX_INITIALIZER;
 
 int priority = 0;
 int lamport = 0;

@@ -69,16 +69,12 @@ void mainLoop()
 
 				while (1) {
 					int c = 0;
-					int c2 = 0;
 					for (int i = 0; i < size; i++) {
 						if (msg_received[i] > 0) {
 							c++;
 						}
-						if (msg_received[i] == 2) {
-							c2++;
-						}
 					}
-					if (c == size && c2<number_of_Mediums) {
+					if (c == size) {
 						break;
 					}
 				}
@@ -93,7 +89,7 @@ void mainLoop()
 					debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium: %d", last);
 					while (last_rel == 0);
 				}
-				//debug("m_pos = %d, last = %d", m_pos, last);
+				debug("m_pos = %d, last = %d", m_pos, last);
 				while (m_pos == -1);
 				k = m_pos % 2;
 				mediums[k].c--;
@@ -109,6 +105,7 @@ void mainLoop()
 				if (mediums[k].c == 0) {
 					mediums[k].c = mediums[k].tun;
 				}
+				//pthread_create(&threadKom, NULL, startKomWatek, 0);
 
 				incLamport();
 				for (int i = 0; i < size; i++) {
