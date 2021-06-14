@@ -104,14 +104,12 @@ void* startKomWatek(void* ptr)
                 }
             }
 
-            for (int i = medium_request_queue_cur_size - 1; i >= 0; i--) {
-                if (medium_request_queue[i].rank == last) {
-                    if (medium_request_queue[i].rel == 1) {
-                        last_rel = 1;
-                    }
-                    break;
+            if (m_pos > -1) {
+                if (medium_request_queue[m_pos - number_of_Mediums].rel == 1) {
+                    last_rel = 1;
                 }
             }
+
 
             break;
         case ACK_T:
@@ -121,13 +119,9 @@ void* startKomWatek(void* ptr)
                     medium_request_queue[i].rel_tun = 1;
                 }
             }
-
-            for (int i = medium_request_queue_cur_size - 1; i >= 0; i--) {
-                if (medium_request_queue[i].rank == last) {
-                    if (medium_request_queue[i].rel_tun == 1) {
-                        last_rel_tun = 1;
-                    }
-                    break;
+            if (m_pos > -1) {
+                if (medium_request_queue[m_pos - number_of_Mediums].rel_tun == 1) {
+                    last_rel_tun = 1;
                 }
             }
 
@@ -147,6 +141,10 @@ void* startKomWatek(void* ptr)
                 }
                 medium_request_queue_cur_size -= number_of_Mediums;
             }
+            if (m_pos != -1) {
+                m_pos -= number_of_Mediums;
+            }
+            
             for (int i = 0; i < medium_request_queue_cur_size; ++i) {
                 debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
             }

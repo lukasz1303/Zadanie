@@ -99,7 +99,6 @@ void mainLoop()
 				mediums[k].c--;
 				changeState(STAN2_SEKCJA);
 				debug("Wchodzę do sekcji krytycznej - OTWARCIE TUNELU PRZEZ MEDIUM %d", k);
-				m_pos = -1;
 			}
 			else if (stan == STAN2_SEKCJA) {
 				sleep(SEC_IN_STATE);
@@ -132,6 +131,7 @@ void mainLoop()
 
 				changeState(STAN3_SEKCJA);
 				debug("\t\t\t\t\tWchodzę do sekcji krytycznej - WYJSCIE Z TUNELU %d", k);
+				m_pos = -1;
 			}
 			else if (stan == STAN3_SEKCJA) {
 				sleep(SEC_IN_STATE);
