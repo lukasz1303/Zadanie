@@ -53,7 +53,7 @@ void* startKomWatek(void* ptr)
             else
                 msg_received[pakiet.src] = 3;
             for (int i = 0; i < size; i++) {
-                debug("{%d}", msg_received[i]);
+                //debug("{%d}", msg_received[i]);
             }
 
             // chyba trzeba jeszcze dodać żeby zerowało lasty na start
