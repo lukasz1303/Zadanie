@@ -16,11 +16,14 @@ void* startKomWatek(void* ptr)
         current_lamport = lamport;
         incBiggerLamport(pakiet.ts);
         //debug("Aktualizuje swój lamport %d na %d", current_lamport, lamport);
-
-        msg_received[pakiet.src] = 1;
-        for (int i = 0; i < size; i++) {
-            debug("{%d}", msg_received[i]);
+        
+        if (status.MPI_TAG != REQ_M) {
+            msg_received[pakiet.src] = 1;
+            for (int i = 0; i < size; i++) {
+                debug("{%d}", msg_received[i]);
+            }
         }
+
 
         switch (status.MPI_TAG) {
         case REQ_F:
@@ -45,10 +48,13 @@ void* startKomWatek(void* ptr)
             ack_f_counter++;
             break;
         case REQ_M:
-            if (pakiet.data < priority || stan != STAN2_REQ)
+            if (pakiet.data < priority || pakiet.data == priority && pakiet.src < rank || stan != STAN2_REQ)
                 msg_received[pakiet.src] = 2;
             else
                 msg_received[pakiet.src] = 3;
+            for (int i = 0; i < size; i++) {
+                debug("{%d}", msg_received[i]);
+            }
 
             // chyba trzeba jeszcze dodać żeby zerowało lasty na start
             debug("Dostałem REQ_M od %d z priorytetem %d", pakiet.src, pakiet.data);
@@ -68,7 +74,7 @@ void* startKomWatek(void* ptr)
             for (int i = medium_request_queue_cur_size - 1; i >= 0; i--) {
                 if (medium_request_queue[i].rank == rank) {
                     m_pos = i;
-                    debug("Moja aktuallna pozycja w kolejce żądań: %d", i);
+                    debug("Moja aktualna pozycja w kolejce żądań: %d", m_pos);
                     break;
                 }
             }
@@ -83,6 +89,7 @@ void* startKomWatek(void* ptr)
                 last_rel = 0;
                 last_rel_tun = 0;
             }
+            debug("Last = %d", last);
 
 
             break;
