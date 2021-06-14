@@ -93,11 +93,12 @@ void mainLoop()
 					debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium: %d", last);
 					while (last_rel == 0);
 				}
-
+				while (m_pos != -1);
 				k = m_pos % 2;
 				mediums[k].c--;
 				changeState(STAN2_SEKCJA);
 				debug("Wchodzę do sekcji krytycznej - OTWARCIE TUNELU PRZEZ MEDIUM %d", k);
+				m_pos = -1;
 			}
 			else if (stan == STAN2_SEKCJA) {
 				sleep(SEC_IN_STATE);

@@ -20,7 +20,7 @@ void* startKomWatek(void* ptr)
         if (status.MPI_TAG != REQ_M) {
             msg_received[pakiet.src] = 1;
             for (int i = 0; i < size; i++) {
-                debug("{%d}", msg_received[i]);
+               // debug("{%d}", msg_received[i]);
             }
         }
 
@@ -68,28 +68,34 @@ void* startKomWatek(void* ptr)
 
             for (int i = 0; i < medium_request_queue_cur_size; ++i) {
 
-                debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
+               // debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
             }
 
             for (int i = medium_request_queue_cur_size - 1; i >= 0; i--) {
                 if (medium_request_queue[i].rank == rank) {
                     m_pos = i;
-                    debug("Moja aktualna pozycja w kolejce żądań: %d", m_pos);
+                    //debug("Moja aktualna pozycja w kolejce żądań: %d", m_pos);
                     break;
                 }
             }
-
-            if (m_pos <= number_of_Mediums) {
-                last = rank;
-                last_rel = 1;
-                last_rel_tun = 1;
+            //Sprawdzić czy mpos =-1
+            if (m_pos != -1) {
+                if (m_pos < number_of_Mediums) {
+                    last = rank;
+                    last_rel = 1;
+                    last_rel_tun = 1;
+                }
+                else {
+                    last = medium_request_queue[m_pos - number_of_Mediums].rank;
+                    last_rel = 0;
+                    last_rel_tun = 0;
+                }
             }
             else {
-                last = medium_request_queue[m_pos - number_of_Mediums].rank;
-                last_rel = 0;
-                last_rel_tun = 0;
+                last = -1;
             }
-            debug("Last = %d", last);
+            
+            //debug("Last = %d", last);
 
 
             break;
