@@ -107,6 +107,7 @@ void* startKomWatek(void* ptr)
             if (m_pos > -1) {
                 if (medium_request_queue[m_pos - number_of_Mediums].rel == 1) {
                     last_rel = 1;
+                    debug("Last = %d, last_rel = %d", last, last_rel);
                 }
             }
 
