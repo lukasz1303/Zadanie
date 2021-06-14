@@ -51,7 +51,8 @@ void mainLoop()
 			}
 			else if (stan == STAN2_START) {
 				for (int i = 0; i < size; i++) {
-					msg_received[i] = 0;
+					if (msg_received[i] == 1)
+						msg_received[i] = 0;
 				}
 				sleep(SEC_IN_STATE); // to nam zasymuluje, że wiadomość trochę leci w kanale
 				packet_t* pkt = malloc(sizeof(packet_t));
@@ -69,7 +70,7 @@ void mainLoop()
 				while (1) {
 					int c = 0;
 					for (int i = 0; i < size; i++) {
-						if (msg_received[i] == 1) {
+						if (msg_received[i] > 0) {
 							c++;
 						}
 					}
@@ -77,13 +78,18 @@ void mainLoop()
 						break;
 					}
 				}
+				for (int i = 0; i < size; i++) {
+					if (msg_received[i] == 3)
+						msg_received[i] = 2;
+					else
+						msg_received[i] = 0;
+				}
 
-
-				if (last != rank){
+				if (last != rank) {
 					debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium: %d", last);
 					while (last_rel == 0);
 				}
-				
+
 				k = m_pos % 2;
 				mediums[k].c--;
 				changeState(STAN2_SEKCJA);
@@ -117,7 +123,7 @@ void mainLoop()
 					debug("\t\t\tCzekam na odbiór ACK_T od poprzedniego użytkownika tunelu: %d", last);
 					while (last_rel_tun == 0);
 				}
-				
+
 				changeState(STAN3_SEKCJA);
 				debug("\t\t\t\t\tWchodzę do sekcji krytycznej - WYJSCIE Z TUNELU %d", k);
 			}
@@ -150,7 +156,7 @@ void mainLoop()
 			else {
 
 			}
-        }
-        sleep(SEC_IN_STATE);
-    }
+		}
+		sleep(SEC_IN_STATE);
+	}
 }

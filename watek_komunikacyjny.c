@@ -16,7 +16,7 @@ void* startKomWatek(void* ptr)
         current_lamport = lamport;
         incBiggerLamport(pakiet.ts);
         //debug("Aktualizuje swój lamport %d na %d", current_lamport, lamport);
-        
+
         msg_received[pakiet.src] = 1;
         for (int i = 0; i < size; i++) {
             debug("{%d}", msg_received[i]);
@@ -45,6 +45,12 @@ void* startKomWatek(void* ptr)
             ack_f_counter++;
             break;
         case REQ_M:
+            if (pakiet.data < priority)
+                msg_received[pakiet.src] = 2;
+            else
+                msg_received[pakiet.src] = 3;
+
+            // chyba trzeba jeszcze dodać żeby zerowało lasty na start
             debug("Dostałem REQ_M od %d z priorytetem %d", pakiet.src, pakiet.data);
             medium_request_queue[medium_request_queue_cur_size].rank = pakiet.src;
             medium_request_queue[medium_request_queue_cur_size].rel = 0;
@@ -67,7 +73,7 @@ void* startKomWatek(void* ptr)
                 }
             }
 
-            if (m_pos <= number_of_Mediums){
+            if (m_pos <= number_of_Mediums) {
                 last = rank;
                 last_rel = 1;
                 last_rel_tun = 1;
@@ -88,7 +94,7 @@ void* startKomWatek(void* ptr)
                 }
             }
 
-            for (int i = medium_request_queue_cur_size -1 ; i >=0; i--) {
+            for (int i = medium_request_queue_cur_size - 1; i >= 0; i--) {
                 if (medium_request_queue[i].rank == last) {
                     if (medium_request_queue[i].rel == 1) {
                         last_rel = 1;
@@ -96,7 +102,7 @@ void* startKomWatek(void* ptr)
                     break;
                 }
             }
-            
+
             break;
         case ACK_T:
             debug("Dostałem ACK_T od %d z danymi %d", pakiet.src, pakiet.data);
@@ -136,8 +142,8 @@ void* startKomWatek(void* ptr)
             }
 
             break;
-	    default:
-	    break;
+        default:
+            break;
         }
     }
 }
