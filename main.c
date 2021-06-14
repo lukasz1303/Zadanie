@@ -127,7 +127,6 @@ void finalizuj()
     /* Czekamy, aż wątek potomny się zakończy */
     println("czekam na wątek \"komunikacyjny\"\n" );
     pthread_join(threadKom,NULL);
-    if (rank==0) pthread_join(threadMon,NULL);
     MPI_Type_free(&MPI_PAKIET_T);
     MPI_Finalize();
 }
