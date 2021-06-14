@@ -93,6 +93,7 @@ void mainLoop()
 					debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium: %d", last);
 					while (last_rel == 0);
 				}
+				debug("m_pos = %d, last = %d", m_pos, last);
 				while (m_pos != -1);
 				k = m_pos % 2;
 				mediums[k].c--;
