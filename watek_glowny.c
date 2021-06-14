@@ -109,7 +109,7 @@ void mainLoop()
 				pthread_t threadRest;
 				int *k_send = malloc(sizeof(*k_send));
 				*k_send = k;
-				debug("k = %d, k_send = %d", k, k_send);
+				debug("k = %d, k_send = %d", k, *k_send);
 				pthread_create(&threadRest, NULL, startRestWatek, (void*)k_send);
 
 				/*incLamport();
