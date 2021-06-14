@@ -106,7 +106,9 @@ void mainLoop()
 					mediums[k].c = mediums[k].tun;
 				}*/
 				pthread_t threadRest;
-				pthread_create(&threadRest, NULL, startRestWatek, 0);
+				int* k_send = malloc(sizeof(*k_send));
+				k_send = k;
+				pthread_create(&threadRest, NULL, startRestWatek, (void*)k_send);
 
 				/*incLamport();
 				for (int i = 0; i < size; i++) {

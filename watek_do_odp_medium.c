@@ -4,6 +4,7 @@
 /* wątek komunikacyjny; zajmuje się odbiorem i reakcją na komunikaty */
 void* startRestWatek(void* ptr)
 {
+	int k = *((int*)ptr);
 	if (mediums[k].c == 0) {
 		sleep(SEC_IN_STATE);
 		mediums[k].c = mediums[k].tun;
