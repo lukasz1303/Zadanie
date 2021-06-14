@@ -136,6 +136,7 @@ void mainLoop()
 				changeState(STAN3_SEKCJA);
 				debug("\t\t\t\t\tWchodzę do sekcji krytycznej - WYJSCIE Z TUNELU %d", k);
 				m_pos = -1;
+				last = -1;
 			}
 			else if (stan == STAN3_SEKCJA) {
 				changeState(STAN3_KONIEC);

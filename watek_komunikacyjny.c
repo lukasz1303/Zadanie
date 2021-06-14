@@ -72,7 +72,7 @@ void* startKomWatek(void* ptr)
             }
 
             for (int i = medium_request_queue_cur_size - 1; i >= 0; i--) {
-                if (medium_request_queue[i].rank == rank) {
+                if (medium_request_queue[i].rank == rank && medium_request_queue[i].rel == 0) {
                     m_pos = i;
                     debug("Moja aktualna pozycja w kolejce żądań: %d", m_pos);
                     break;
@@ -151,6 +151,7 @@ void* startKomWatek(void* ptr)
                     m_pos -= number_of_Mediums;
                 }
             }
+           
            
             for (int i = 0; i < medium_request_queue_cur_size; ++i) {
                 debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
