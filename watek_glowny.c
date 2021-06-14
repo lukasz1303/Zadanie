@@ -102,12 +102,13 @@ void mainLoop()
 				debug("Wychodzę z sekcji krytycznej - OTWARCIE TUNELU PRZEZ MEDIUM %d", k);
 			}
 			else if (stan == STAN2_KONIEC) {
-				if (mediums[k].c == 0) {
+				/*if (mediums[k].c == 0) {
 					mediums[k].c = mediums[k].tun;
-				}
-				//pthread_create(&threadKom, NULL, startKomWatek, 0);
+				}*/
+				pthread_t threadRest;
+				pthread_create(&threadRest, NULL, startRestWatek, 0);
 
-				incLamport();
+				/*incLamport();
 				for (int i = 0; i < size; i++) {
 					packet_t* pkt = malloc(sizeof(packet_t));
 					pkt->data = 1;
@@ -115,12 +116,13 @@ void mainLoop()
 					sendPacket2(pkt, i, REL_M);
 					debug("Wysyłam REL_M do %d", i);
 
-				}
+				}*/
 				changeState(STAN3_START);
 				debug("Przechodzę do stan3_START");
 			}
 			else if (stan == STAN3_START) {
 
+				sleep(rand()%6+1);
 				if (last != rank) {
 					debug("Last = %d, last_rel_tun = %d", last, last_rel_tun);
 					debug("\t\t\tCzekam na odbiór ACK_T od poprzedniego użytkownika tunelu: %d", last);
@@ -132,7 +134,6 @@ void mainLoop()
 				m_pos = -1;
 			}
 			else if (stan == STAN3_SEKCJA) {
-				sleep(SEC_IN_STATE);
 				changeState(STAN3_KONIEC);
 				debug("\t\t\t\t\tWychodzę z sekcji krytycznej - WYJSCIE Z TUNELU %d", k);
 			}
