@@ -107,8 +107,8 @@ void mainLoop()
 					mediums[k].c = mediums[k].tun;
 				}*/
 				pthread_t threadRest;
-				int* k_send = malloc(sizeof(*k_send));
-				k_send = *((int*)k);
+				int *k_send = malloc(sizeof(*k_send));
+				*k_send = k;
 				debug("k = %d, k_send = %d", k, k_send);
 				pthread_create(&threadRest, NULL, startRestWatek, (void*)k_send);
 
