@@ -45,7 +45,7 @@ void* startKomWatek(void* ptr)
             ack_f_counter++;
             break;
         case REQ_M:
-            if (pakiet.data < priority)
+            if (pakiet.data < priority || stan != STAN2_REQ)
                 msg_received[pakiet.src] = 2;
             else
                 msg_received[pakiet.src] = 3;
