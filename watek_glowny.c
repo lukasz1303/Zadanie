@@ -90,7 +90,7 @@ void mainLoop()
 					debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium: %d", last);
 					while (last_rel == 0);
 				}
-				debug("m_pos = %d, last = %d", m_pos, last);
+				//debug("m_pos = %d, last = %d", m_pos, last);
 				while (m_pos == -1);
 				k = m_pos % 2;
 				mediums[k].c--;
@@ -109,7 +109,7 @@ void mainLoop()
 				pthread_t threadRest;
 				int *k_send = malloc(sizeof(*k_send));
 				*k_send = k;
-				debug("k = %d, k_send = %d", k, *k_send);
+				//debug("k = %d, k_send = %d", k, *k_send);
 				pthread_create(&threadRest, NULL, startRestWatek, (void*)k_send);
 
 				/*incLamport();
@@ -128,8 +128,10 @@ void mainLoop()
 
 				sleep(rand()%6+1);
 				if (last != rank) {
-					debug("Last = %d, last_rel_tun = %d", last, last_rel_tun);
-					debug("\t\t\tCzekam na odbiór ACK_T od poprzedniego użytkownika tunelu: %d", last);
+					//debug("Last = %d, last_rel_tun = %d", last, last_rel_tun);
+					if (last_rel_tun == 0) {
+						debug("\t\t\tCzekam na odbiór ACK_T od poprzedniego użytkownika tunelu: %d", last);
+					}
 					while (last_rel_tun == 0);
 				}
 
@@ -153,14 +155,8 @@ void mainLoop()
 					debug("\t\t\t\t\t\t\tWysyłam ACK_T do %d", i);
 
 				}
-				changeState(STAN2_START);
+				changeState(STAN1_START);
 				debug("\t\t\t\t\t\t\tPrzechodzę do stan1_START");
-
-
-				//|^
-				//TODO ZMIENIĆ STAN2_START NA STAN1_START
-
-
 
 			}
 			else {

@@ -66,15 +66,15 @@ void* startKomWatek(void* ptr)
             medium_request_queue_cur_size++;
             qsort(medium_request_queue, medium_request_queue_cur_size, sizeof(process), comparePriority);
 
-            for (int i = 0; i < medium_request_queue_cur_size; ++i) {
+            //for (int i = 0; i < medium_request_queue_cur_size; ++i) {
 
-                debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
-            }
+                //debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
+           // }
 
             for (int i = medium_request_queue_cur_size - 1; i >= 0; i--) {
                 if (medium_request_queue[i].rank == rank && medium_request_queue[i].rel == 0) {
                     m_pos = i;
-                    debug("Moja aktualna pozycja w kolejce żądań: %d", m_pos);
+                   // debug("Moja aktualna pozycja w kolejce żądań: %d", m_pos);
                     break;
                 }
             }
@@ -92,7 +92,7 @@ void* startKomWatek(void* ptr)
                 }
             }
             
-            debug("Last = %d, m_pos = %d", last, m_pos);
+            //debug("Last = %d, m_pos = %d", last, m_pos);
 
 
             break;
@@ -107,13 +107,13 @@ void* startKomWatek(void* ptr)
             if (m_pos > -1) {
                 if (medium_request_queue[m_pos - number_of_Mediums].rel == 1) {
                     last_rel = 1;
-                    debug("Last = %d, last_rel = %d", last, last_rel);
+                   // debug("Last = %d, last_rel = %d", last, last_rel);
                 }
             }
 
-            for (int i = 0; i < medium_request_queue_cur_size; ++i) {
-                debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
-            }
+           // for (int i = 0; i < medium_request_queue_cur_size; ++i) {
+            //    debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
+            //}
 
 
             break;
@@ -127,7 +127,7 @@ void* startKomWatek(void* ptr)
             if (m_pos > -1) {
                 if (medium_request_queue[m_pos - number_of_Mediums].rel_tun == 1) {
                     last_rel_tun = 1;
-                    debug("Last = %d, last_rel_tun = %d", last, last_rel_tun);
+                    //debug("Last = %d, last_rel_tun = %d", last, last_rel_tun);
 
                 }
             }
@@ -153,9 +153,9 @@ void* startKomWatek(void* ptr)
             }
            
            
-            for (int i = 0; i < medium_request_queue_cur_size; ++i) {
-                debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
-            }
+           // for (int i = 0; i < medium_request_queue_cur_size; ++i) {
+                //debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
+            //}
 
             break;
         default:

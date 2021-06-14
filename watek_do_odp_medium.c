@@ -5,13 +5,14 @@
 void* startRestWatek(void* ptr)
 {
 	int k = *((int*)ptr);
-	debug("k_odebrane = %d", k);
+	//debug("k_odebrane = %d", k);
 	if (mediums[k].c == 0) {
-		sleep(SEC_IN_STATE);
 		debug("Medium %d odpoczywa", k);
+		sleep(SEC_IN_STATE);
 		mediums[k].c = mediums[k].tun;
+		debug("Medium %d skończyło odpoczywać", k);
 	}
-	debug("Medium %d skończyło odpoczywać", k);
+
 	incLamport();
 	for (int i = 0; i < size; i++) {
 		packet_t* pkt = malloc(sizeof(packet_t));
