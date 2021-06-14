@@ -1,5 +1,6 @@
 #include "main.h"
 #include "watek_glowny.h"
+#include "watek_do_odp_medium.h"
 
 void mainLoop()
 {
@@ -107,7 +108,8 @@ void mainLoop()
 				}*/
 				pthread_t threadRest;
 				int* k_send = malloc(sizeof(*k_send));
-				k_send = k;
+				k_send = *((int)k);
+				debug("k = %d, k_send = %d", k, k_send);
 				pthread_create(&threadRest, NULL, startRestWatek, (void*)k_send);
 
 				/*incLamport();

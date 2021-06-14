@@ -5,6 +5,7 @@
 void* startRestWatek(void* ptr)
 {
 	int k = *((int*)ptr);
+	debug("k_odebrane = %d", k);
 	if (mediums[k].c == 0) {
 		sleep(SEC_IN_STATE);
 		mediums[k].c = mediums[k].tun;
