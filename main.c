@@ -20,7 +20,7 @@ pthread_mutex_t stateMut = PTHREAD_MUTEX_INITIALIZER;
 int priority = 0;
 int lamport = 0;
 int ack_f_counter = 0;
-int ack_f_queue[100];
+int *ack_f_queue;
 int ack_f_queue_cur_size = 0;
 int number_of_Mediums = 2;
 process* medium_request_queue;
@@ -80,6 +80,7 @@ void inicjuj(int *argc, char ***argv)
     int provided;
     shop_size = 2;
     msg_received = malloc(size * sizeof(int));
+    ack_f_queue = malloc(size * sizeof(int));
     mediums = malloc(number_of_Mediums * sizeof(medium));
     medium_request_queue = malloc((number_of_Mediums *2 + 2*size) * sizeof(medium));
     for (int i = 0; i < number_of_Mediums; i++) {

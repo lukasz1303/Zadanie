@@ -12,9 +12,8 @@ void mainLoop()
 		if (perc < STATE_CHANGE_PROB) {
 			if (stan == STAN1_START) {
 				ack_f_counter = 0;
-				//changeState(STAN1_KONIEC);
 
-				sleep(SEC_IN_STATE); // to nam zasymuluje, że wiadomość trochę leci w kanale
+				sleep(SEC_IN_STATE);
 				packet_t* pkt = malloc(sizeof(packet_t));
 				incLamport();
 				priority = lamport;
@@ -26,7 +25,7 @@ void mainLoop()
 						sendPacket2(pkt, i, REQ_F);
 					}
 				}
-				while (ack_f_counter < size - shop_size);
+				while (ack_f_counter < size - shop_size); // sprawdź czy jest miejsce w sklepie
 				changeState(STAN1_SEKCJA);
 				debug("Wchodzę do sekcji krytycznej - SKLEP FIRMOWY");
 			}
@@ -48,14 +47,14 @@ void mainLoop()
 				changeState(STAN2_START);
 				ack_f_queue_cur_size = 0;
 
-				debug("Przechodzę do stan2_START");
+				debug("Przechodzę do STAN 2");
 			}
 			else if (stan == STAN2_START) {
 				for (int i = 0; i < size; i++) {
 					if (msg_received[i] == 1)
 						msg_received[i] = 0;
 				}
-				sleep(SEC_IN_STATE); // to nam zasymuluje, że wiadomość trochę leci w kanale
+				sleep(SEC_IN_STATE);
 				packet_t* pkt = malloc(sizeof(packet_t));
 				incLamport();
 				priority = lamport;
@@ -66,8 +65,7 @@ void mainLoop()
 					sendPacket2(pkt, i, REQ_M);
 				}
 
-				debug("Czekam na odbiór starszej wiadomości");
-
+				// czekanie na odbiór starszej wiadomości od wszystkich procesów
 				while (1) {
 					int c = 0;
 					for (int i = 0; i < size; i++) {
@@ -79,6 +77,7 @@ void mainLoop()
 						break;
 					}
 				}
+
 				for (int i = 0; i < size; i++) {
 					if (msg_received[i] == 3)
 						msg_received[i] = 2;
@@ -87,12 +86,13 @@ void mainLoop()
 				}
 
 				if (last != rank) {
-					debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium: %d", last);
+					debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium");
 					while (last_rel == 0);
 				}
-				//debug("m_pos = %d, last = %d", m_pos, last);
+
 				while (m_pos == -1);
-				k = m_pos % 2;
+				//wybór medium
+				k = m_pos % number_of_Mediums;
 				mediums[k].c--;
 				changeState(STAN2_SEKCJA);
 				debug("Wchodzę do sekcji krytycznej - OTWARCIE TUNELU PRZEZ MEDIUM %d", k);
@@ -103,34 +103,19 @@ void mainLoop()
 				debug("Wychodzę z sekcji krytycznej - OTWARCIE TUNELU PRZEZ MEDIUM %d", k);
 			}
 			else if (stan == STAN2_KONIEC) {
-				/*if (mediums[k].c == 0) {
-					mediums[k].c = mediums[k].tun;
-				}*/
 				pthread_t threadRest;
 				int *k_send = malloc(sizeof(*k_send));
 				*k_send = k;
-				//debug("k = %d, k_send = %d", k, *k_send);
 				pthread_create(&threadRest, NULL, startRestWatek, (void*)k_send);
-
-				/*incLamport();
-				for (int i = 0; i < size; i++) {
-					packet_t* pkt = malloc(sizeof(packet_t));
-					pkt->data = 1;
-					sleep(SEC_IN_STATE);
-					sendPacket2(pkt, i, REL_M);
-					debug("Wysyłam REL_M do %d", i);
-
-				}*/
 				changeState(STAN3_START);
-				debug("Przechodzę do stan3_START");
+				debug("Przechodzę do STAN 3");
 			}
 			else if (stan == STAN3_START) {
 
 				sleep(rand()%6+1);
 				if (last != rank) {
-					//debug("Last = %d, last_rel_tun = %d", last, last_rel_tun);
 					if (last_rel_tun == 0) {
-						debug("\t\t\tCzekam na odbiór ACK_T od poprzedniego użytkownika tunelu: %d", last);
+						debug("\t\t\tCzekam na odbiór ACK_T od poprzedniego użytkownika tunelu");
 					}
 					while (last_rel_tun == 0);
 				}
@@ -156,12 +141,10 @@ void mainLoop()
 
 				}
 				changeState(STAN1_START);
-				debug("\t\t\t\t\t\t\tPrzechodzę do stan1_START");
+				debug("\t\t\t\t\t\t\tPrzechodzę do STAN 1");
 
 			}
-			else {
-
-			}
+			else {}
 		}
 		sleep(SEC_IN_STATE);
 	}

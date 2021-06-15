@@ -47,7 +47,6 @@ extern int tallow;
 /* stan globalny wykryty przez monitor */
 extern int globalState;
 /* ilu już odpowiedziało na GIVEMESTATE */
-extern int numberReceived;
 extern int number_of_Mediums;
 
 /* to może przeniesiemy do global... */
@@ -60,7 +59,6 @@ typedef struct {
 extern MPI_Datatype MPI_PAKIET_T;
 
 /* Typy wiadomości */
-#define FINISH 1
 #define REQ_F 2
 #define ACK_F 3
 #define REQ_M 4
@@ -89,7 +87,7 @@ int incLamport();
 int incBiggerLamport(int);
 extern int lamport;
 extern int ack_f_counter;
-extern int ack_f_queue[100];
+extern int* ack_f_queue;
 extern int ack_f_queue_cur_size;
 extern int shop_size;
 
@@ -139,6 +137,5 @@ extern int m_pos;
 void sendPacket(packet_t *pkt, int destination, int tag);
 void sendPacket2(packet_t* pkt, int destination, int tag);
 void changeState( state_t );
-void changeTallow( int );
 int comparePriority(const void* a, const void* b);
 #endif

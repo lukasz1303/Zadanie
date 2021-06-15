@@ -1,11 +1,10 @@
 #include "main.h"
 #include "watek_do_odp_medium.h"
 
-/* wątek komunikacyjny; zajmuje się odbiorem i reakcją na komunikaty */
+/* wątek do odpoczynku medium; zajmuje się odpoczynkiem medium i wysyłaniem pakietów REL_M do procesów*/
 void* startRestWatek(void* ptr)
 {
 	int k = *((int*)ptr);
-	//debug("k_odebrane = %d", k);
 	if (mediums[k].c == 0) {
 		debug("Medium %d odpoczywa", k);
 		sleep(SEC_IN_STATE);

@@ -11,25 +11,21 @@ void* startKomWatek(void* ptr)
     packet_t pakiet;
     /* Obrazuje pętlę odbierającą pakiety o różnych typach */
     while (1) {
-        //debug("czekam na recv");
         MPI_Recv(&pakiet, 1, MPI_PAKIET_T, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
         current_lamport = lamport;
         incBiggerLamport(pakiet.ts);
-        //debug("Aktualizuje swój lamport %d na %d", current_lamport, lamport);
         
-        if (status.MPI_TAG != REQ_M) {
+        //zaznacz odebranie starszej wiadomoci, innej od REQ_M)
+        if (status.MPI_TAG != REQ_M && pakiet.ts >= current_lamport) {
             msg_received[pakiet.src] = 1;
-            for (int i = 0; i < size; i++) {
-               // debug("{%d}", msg_received[i]);
-            }
         }
-
 
         switch (status.MPI_TAG) {
         case REQ_F:
             debug("Dostałem REQ_F od %d z danymi %d", pakiet.src, pakiet.data);
+            // sprawdź priorytet otrzymanego żądania
             if ((stan != STAN1_REQ && stan != STAN1_SEKCJA && stan != STAN1_KONIEC) ||
-                (stan == STAN1_REQ && (priority > pakiet.data ||
+                    (stan == STAN1_REQ && (priority > pakiet.data ||
                     priority == pakiet.data && pakiet.src < rank))) {
                 packet_t* pkt = malloc(sizeof(packet_t));
                 pkt->data = 1;
@@ -48,15 +44,12 @@ void* startKomWatek(void* ptr)
             ack_f_counter++;
             break;
         case REQ_M:
+            // zaznacz otrzymanie wiadomości REQ_M
             if (pakiet.data < priority || pakiet.data == priority && pakiet.src < rank || stan != STAN2_REQ)
                 msg_received[pakiet.src] = 2;
             else
                 msg_received[pakiet.src] = 3;
-            for (int i = 0; i < size; i++) {
-                //debug("{%d}", msg_received[i]);
-            }
 
-            // chyba trzeba jeszcze dodać żeby zerowało lasty na start
             debug("Dostałem REQ_M od %d z priorytetem %d", pakiet.src, pakiet.data);
             medium_request_queue[medium_request_queue_cur_size].rank = pakiet.src;
             medium_request_queue[medium_request_queue_cur_size].rel = 0;
@@ -64,21 +57,17 @@ void* startKomWatek(void* ptr)
             medium_request_queue[medium_request_queue_cur_size].rel_tun = 0;
 
             medium_request_queue_cur_size++;
+            //posortuj kolejkę żądań po priorytetach
             qsort(medium_request_queue, medium_request_queue_cur_size, sizeof(process), comparePriority);
 
-            //for (int i = 0; i < medium_request_queue_cur_size; ++i) {
-
-                //debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
-           // }
-
+            //ustal moją pozycję w kolejce żądań
             for (int i = medium_request_queue_cur_size - 1; i >= 0; i--) {
                 if (medium_request_queue[i].rank == rank && medium_request_queue[i].rel == 0) {
                     m_pos = i;
-                   // debug("Moja aktualna pozycja w kolejce żądań: %d", m_pos);
                     break;
                 }
             }
-            //Sprawdzić czy mpos =-1
+
             if (m_pos != -1) {
                 if (m_pos < number_of_Mediums) {
                     last = rank;
@@ -91,9 +80,6 @@ void* startKomWatek(void* ptr)
                     last_rel_tun = medium_request_queue[m_pos - number_of_Mediums].rel_tun;
                 }
             }
-            
-            //debug("Last = %d, m_pos = %d", last, m_pos);
-
 
             break;
         case REL_M:
@@ -103,18 +89,16 @@ void* startKomWatek(void* ptr)
                     medium_request_queue[i].rel = 1;
                 }
             }
-
             if (m_pos > -1) {
                 if (medium_request_queue[m_pos - number_of_Mediums].rel == 1) {
                     last_rel = 1;
-                   // debug("Last = %d, last_rel = %d", last, last_rel);
                 }
             }
-
-           // for (int i = 0; i < medium_request_queue_cur_size; ++i) {
-            //    debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
-            //}
-
+            if (rank == 0) {
+                for (int i = 0; i < medium_request_queue_cur_size; ++i) {
+                    debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
+                }
+            }
 
             break;
         case ACK_T:
@@ -127,7 +111,6 @@ void* startKomWatek(void* ptr)
             if (m_pos > -1) {
                 if (medium_request_queue[m_pos - number_of_Mediums].rel_tun == 1) {
                     last_rel_tun = 1;
-                    //debug("Last = %d, last_rel_tun = %d", last, last_rel_tun);
 
                 }
             }
@@ -152,10 +135,12 @@ void* startKomWatek(void* ptr)
                 }
             }
            
-           
-           // for (int i = 0; i < medium_request_queue_cur_size; ++i) {
-                //debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
-            //}
+            if (rank == 0) {
+                for (int i = 0; i < medium_request_queue_cur_size; ++i) {
+                    debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
+                }
+            }
+
 
             break;
         default:
