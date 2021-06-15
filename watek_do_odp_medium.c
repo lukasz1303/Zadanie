@@ -5,6 +5,7 @@
 void* startRestWatek(void* ptr)
 {
 	int k = *((int*)ptr);
+	debug("k = %d, mediums[k].c = %d", k, mediums[k].c);
 	if (mediums[k].c == 0) {
 		debug("Medium %d odpoczywa", k);
 		sleep(SEC_IN_STATE);
