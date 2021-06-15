@@ -11,18 +11,17 @@
 
 state_t stan=STAN1_START;
 volatile char end = FALSE;
-int size,rank, shop_size; /* nie trzeba zerować, bo zmienna globalna statyczna */
+int size,rank; /* nie trzeba zerować, bo zmienna globalna statyczna */
 MPI_Datatype MPI_PAKIET_T;
 pthread_t threadKom;
 pthread_mutex_t lamportMut = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t stateMut = PTHREAD_MUTEX_INITIALIZER;
 
 int priority = 0;
-int lamport = 0;
+
 int ack_f_counter = 0;
 int *ack_f_queue;
 int ack_f_queue_cur_size = 0;
-int number_of_Mediums = 2;
 process* medium_request_queue;
 int medium_request_queue_cur_size = 0;
 medium* mediums;
@@ -31,6 +30,10 @@ int last_rel = 0;
 int last_rel_tun = 0;
 int m_pos = -1;
 int* msg_received;
+
+int lamport = 0;
+int number_of_Mediums = 2;
+int shop_size = 5;
 
 void check_thread_support(int provided)
 {
@@ -78,14 +81,13 @@ int incBiggerLamport(int n){
 void inicjuj(int *argc, char ***argv)
 {
     int provided;
-    shop_size = 2;
     msg_received = malloc(size * sizeof(int));
     ack_f_queue = malloc(size * sizeof(int));
     mediums = malloc(number_of_Mediums * sizeof(medium));
     medium_request_queue = malloc((number_of_Mediums *2 + 2*size) * sizeof(medium));
     for (int i = 0; i < number_of_Mediums; i++) {
-        mediums[i].tun = 3;
-        mediums[i].c = 3;
+        mediums[i].tun = 2;
+        mediums[i].c = 2;
     }
     MPI_Init_thread(argc, argv,MPI_THREAD_MULTIPLE, &provided);
     check_thread_support(provided);
@@ -113,9 +115,6 @@ void inicjuj(int *argc, char ***argv)
     srand(rank);
   
     pthread_create( &threadKom, NULL, startKomWatek , 0);
-   // if (rank==0) {
-	//pthread_create( &threadMon, NULL, startMonitor, 0);
-    //}
     debug("jestem");
 }
 
