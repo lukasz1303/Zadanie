@@ -90,7 +90,7 @@ void* startKomWatek(void* ptr)
                 }
             }
             if (pakiet.src != rank) {
-                if (mediums[pakiet.data].c == 0) {
+                if (mediums[pakiet.data].c == 1) {
                     mediums[pakiet.data].c = mediums[pakiet.data].tun;
                 }
                 else {
