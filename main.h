@@ -41,14 +41,6 @@ extern int rank;
 extern int size;
 extern int priority;
 
-/* Ile mamy łoju na składzie? */
-extern int tallow;
-
-/* stan globalny wykryty przez monitor */
-extern int globalState;
-/* ilu już odpowiedziało na GIVEMESTATE */
-extern int number_of_Mediums;
-
 /* to może przeniesiemy do global... */
 typedef struct {
     int ts;       /* timestamp (zegar lamporta */
@@ -83,8 +75,8 @@ extern MPI_Datatype MPI_PAKIET_T;
                                                 ...  w definicji makra oznacza, że ma zmienną liczbę parametrów
                                             
 */
-int incLamport();
-int incBiggerLamport(int);
+
+extern int number_of_Mediums;
 extern int lamport;
 extern int ack_f_counter;
 extern int* ack_f_queue;
@@ -138,4 +130,6 @@ void sendPacket(packet_t *pkt, int destination, int tag);
 void sendPacket2(packet_t* pkt, int destination, int tag);
 void changeState( state_t );
 int comparePriority(const void* a, const void* b);
+int incLamport();
+int incBiggerLamport(int);
 #endif

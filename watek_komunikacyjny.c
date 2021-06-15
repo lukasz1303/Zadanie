@@ -103,11 +103,6 @@ void* startKomWatek(void* ptr)
                     last_rel = 1;
                 }
             }
-            if (rank == 0) {
-                for (int i = 0; i < medium_request_queue_cur_size; ++i) {
-                    debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
-                }
-            }
             
 
             break;
@@ -144,13 +139,6 @@ void* startKomWatek(void* ptr)
                     m_pos -= number_of_Mediums;
                 }
             }
-           
-            if (rank == 0) {
-                for (int i = 0; i < medium_request_queue_cur_size; ++i) {
-                    debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
-                }
-            }
-
 
             break;
         default:

@@ -33,7 +33,7 @@ int* msg_received;
 
 int lamport = 0;
 int number_of_Mediums = 2;
-int shop_size = 5;
+int shop_size = 2;
 
 void check_thread_support(int provided)
 {
@@ -86,8 +86,8 @@ void inicjuj(int *argc, char ***argv)
     mediums = malloc(number_of_Mediums * sizeof(medium));
     medium_request_queue = malloc((number_of_Mediums *2 + 2*size) * sizeof(medium));
     for (int i = 0; i < number_of_Mediums; i++) {
-        mediums[i].tun = 2;
-        mediums[i].c = 2;
+        mediums[i].tun = 3;
+        mediums[i].c = 3;
     }
     MPI_Init_thread(argc, argv,MPI_THREAD_MULTIPLE, &provided);
     check_thread_support(provided);
