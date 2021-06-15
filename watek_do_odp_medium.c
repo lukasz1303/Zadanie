@@ -5,7 +5,6 @@
 void* startRestWatek(void* ptr)
 {
 	int k = *((int*)ptr);
-	debug("k = %d, mediums[k].c = %d", k, mediums[k].c);
 	if (mediums[k].c == 0) {
 		debug("Medium %d odpoczywa", k);
 		sleep(SEC_IN_STATE);
@@ -19,7 +18,7 @@ void* startRestWatek(void* ptr)
 		pkt->data = k;
 		sleep(SEC_IN_STATE);
 		sendPacket2(pkt, i, REL_M);
-		debug("Wysyłam REL_M do %d", i);
+		//debug("Wysyłam REL_M do %d", i);
 
 	}
 }

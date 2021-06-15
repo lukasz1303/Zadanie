@@ -22,7 +22,7 @@ void* startKomWatek(void* ptr)
 
         switch (status.MPI_TAG) {
         case REQ_F:
-            debug("Dostałem REQ_F od %d z danymi %d", pakiet.src, pakiet.data);
+            //debug("Dostałem REQ_F od %d z danymi %d", pakiet.src, pakiet.data);
             // sprawdź priorytet otrzymanego żądania
             if ((stan != STAN1_REQ && stan != STAN1_SEKCJA && stan != STAN1_KONIEC) ||
                     (stan == STAN1_REQ && (priority > pakiet.data ||
@@ -40,7 +40,7 @@ void* startKomWatek(void* ptr)
 
             break;
         case ACK_F:
-            debug("Dostałem ACK_F od %d z danymi %d", pakiet.src, pakiet.data);
+            //debug("Dostałem ACK_F od %d z danymi %d", pakiet.src, pakiet.data);
             ack_f_counter++;
             break;
         case REQ_M:
@@ -50,7 +50,7 @@ void* startKomWatek(void* ptr)
             else
                 msg_received[pakiet.src] = 3;
 
-            debug("Dostałem REQ_M od %d z priorytetem %d", pakiet.src, pakiet.data);
+            //debug("Dostałem REQ_M od %d z priorytetem %d", pakiet.src, pakiet.data);
             medium_request_queue[medium_request_queue_cur_size].rank = pakiet.src;
             medium_request_queue[medium_request_queue_cur_size].rel = 0;
             medium_request_queue[medium_request_queue_cur_size].priority = pakiet.data;
@@ -83,7 +83,7 @@ void* startKomWatek(void* ptr)
 
             break;
         case REL_M:
-            debug("Dostałem REL_M od %d z danymi %d", pakiet.src, pakiet.data);
+            //debug("Dostałem REL_M od %d z danymi %d", pakiet.src, pakiet.data);
             for (int i = 0; i < medium_request_queue_cur_size; i++) {
                 if (medium_request_queue[i].rank == pakiet.src) {
                     medium_request_queue[i].rel = 1;
@@ -112,7 +112,7 @@ void* startKomWatek(void* ptr)
 
             break;
         case ACK_T:
-            debug("Dostałem ACK_T od %d z danymi %d", pakiet.src, pakiet.data);
+            //debug("Dostałem ACK_T od %d z danymi %d", pakiet.src, pakiet.data);
             for (int i = 0; i < medium_request_queue_cur_size; i++) {
                 if (medium_request_queue[i].rank == pakiet.src) {
                     medium_request_queue[i].rel_tun = 1;

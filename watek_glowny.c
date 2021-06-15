@@ -41,9 +41,10 @@ void mainLoop()
 					pkt->data = 1;
 					sleep(SEC_IN_STATE);
 					sendPacket2(pkt, ack_f_queue[i], ACK_F);
-					debug("Wysyłam ACK_F z kolejki do %d", ack_f_queue[i]);
+					//debug("Wysyłam ACK_F z kolejki do %d", ack_f_queue[i]);
 
 				}
+				debug("Wysyłam ACK_F z kolejki");
 				changeState(STAN2_START);
 				ack_f_queue_cur_size = 0;
 
@@ -59,7 +60,7 @@ void mainLoop()
 				incLamport();
 				priority = lamport;
 				pkt->data = priority;
-				debug("\t\t\tWysyłam REQ_M z wartoscią priorytetu: %d", priority);
+				debug("Wysyłam REQ_M z wartoscią priorytetu: %d", priority);
 				changeState(STAN2_REQ);
 				for (int i = 0; i < size; i++) {
 					sendPacket2(pkt, i, REQ_M);
@@ -86,7 +87,7 @@ void mainLoop()
 				}
 
 				if (last != rank) {
-					debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium");
+					//debug("Czekam na odbiór REL_M od poprzedniego użytkownika medium");
 					while (last_rel == 0);
 				}
 
@@ -115,19 +116,19 @@ void mainLoop()
 				sleep(rand()%6+1);
 				if (last != rank) {
 					if (last_rel_tun == 0) {
-						debug("\t\t\tCzekam na odbiór ACK_T od poprzedniego użytkownika tunelu");
+						//debug("Czekam na odbiór ACK_T od poprzedniego użytkownika tunelu");
 					}
 					while (last_rel_tun == 0);
 				}
 
 				changeState(STAN3_SEKCJA);
-				debug("\t\t\t\t\tWchodzę do sekcji krytycznej - WYJSCIE Z TUNELU %d", k);
+				debug("Wchodzę do sekcji krytycznej - WYJSCIE Z TUNELU %d", k);
 				m_pos = -1;
 				last = -1;
 			}
 			else if (stan == STAN3_SEKCJA) {
 				changeState(STAN3_KONIEC);
-				debug("\t\t\t\t\tWychodzę z sekcji krytycznej - WYJSCIE Z TUNELU %d", k);
+				debug("Wychodzę z sekcji krytycznej - WYJSCIE Z TUNELU %d", k);
 			}
 			else if (stan == STAN3_KONIEC) {
 
@@ -137,11 +138,12 @@ void mainLoop()
 					pkt->data = 1;
 					sleep(SEC_IN_STATE);
 					sendPacket2(pkt, i, ACK_T);
-					debug("\t\t\t\t\t\t\tWysyłam ACK_T do %d", i);
+					//debug("Wysyłam ACK_T do %d", i);
 
 				}
+				debug("Wysyłam ACK_T");
 				changeState(STAN1_START);
-				debug("\t\t\t\t\t\t\tPrzechodzę do STAN 1");
+				debug("Przechodzę do STAN 1");
 
 			}
 			else {}
