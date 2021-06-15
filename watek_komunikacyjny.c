@@ -90,8 +90,14 @@ void* startKomWatek(void* ptr)
                 }
             }
             if (pakiet.src != rank) {
-                mediums[pakiet.data].c--;
+                if (mediums[pakiet.data].c == 0) {
+                    mediums[pakiet.data].c = mediums[pakiet.data].tun;
+                }
+                else {
+                    mediums[pakiet.data].c--;
+                }
             }
+
             if (m_pos > -1) {
                 if (medium_request_queue[m_pos - number_of_Mediums].rel == 1) {
                     last_rel = 1;
