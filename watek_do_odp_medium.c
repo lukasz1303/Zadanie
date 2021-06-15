@@ -16,7 +16,7 @@ void* startRestWatek(void* ptr)
 	incLamport();
 	for (int i = 0; i < size; i++) {
 		packet_t* pkt = malloc(sizeof(packet_t));
-		pkt->data = 1;
+		pkt->data = k;
 		sleep(SEC_IN_STATE);
 		sendPacket2(pkt, i, REL_M);
 		debug("Wysyłam REL_M do %d", i);

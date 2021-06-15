@@ -89,6 +89,9 @@ void* startKomWatek(void* ptr)
                     medium_request_queue[i].rel = 1;
                 }
             }
+            if (pakiet.src != rank) {
+                mediums[pakiet.data].c--;
+            }
             if (m_pos > -1) {
                 if (medium_request_queue[m_pos - number_of_Mediums].rel == 1) {
                     last_rel = 1;
@@ -99,6 +102,7 @@ void* startKomWatek(void* ptr)
                     debug("[%d %d %d %d]", medium_request_queue[i].rank, medium_request_queue[i].rel, medium_request_queue[i].priority, medium_request_queue[i].rel_tun);
                 }
             }
+            
 
             break;
         case ACK_T:
